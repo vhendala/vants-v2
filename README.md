@@ -12,8 +12,8 @@ It has two parts, built on one backend:
   signs one transaction, and gets a receipt. It also adds money by Pix, invests in vaults and Tesouro, and lists all activity.
   The mini app is a client of the rail.
 
-Status: the work through T-035 is on `main`. The evidence run that would back public claims (T-090) has not been done yet. See
-[`docs/SPEC.md`](docs/SPEC.md) §2 for what this project may and may not claim.
+Status: the task board in [`docs/SPEC.md`](docs/SPEC.md) §9 says where each piece of work stands. The evidence run that would
+back public claims (T-090) has not been done yet. See §2 of the same file for what this project may and may not claim.
 
 ## Repository
 
