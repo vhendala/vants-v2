@@ -1,0 +1,193 @@
+{
+  "startedAt": "2026-10-22T22:39:27.023Z",
+  "network": "testnet",
+  "hodle": "sandbox",
+  "D1": {
+    "paymentId": "pay_eb98bcc2f6be4260b31af3f0",
+    "depositTx": "29e58bcb1b12c18c906a7bc9fa3625e39d0de4fdfe58c045ee7168f5d71a7c65",
+    "depositLedgerClosedAt": "2026-10-22T22:39:32.000Z",
+    "payoutCompletedAt": "2026-10-22T22:40:04.049Z",
+    "webhookReceivedAt": "2026-10-22T22:40:07.366Z",
+    "secondsDepositToPayout": 32,
+    "secondsDepositToWebhook": 35.4,
+    "hodleEndToEndId": "SANDBOXEAA502CD16764AEBA931DAC66",
+    "webhooks": [
+      {
+        "id": "pay_eb98bcc2f6be4260b31af3f0:0",
+        "status": "awaiting_deposit",
+        "verified": true
+      },
+      {
+        "id": "pay_eb98bcc2f6be4260b31af3f0:1",
+        "status": "funded",
+        "verified": true
+      },
+      {
+        "id": "pay_eb98bcc2f6be4260b31af3f0:2",
+        "status": "completed",
+        "verified": true
+      },
+      {
+        "id": "pay_eb98bcc2f6be4260b31af3f0:3",
+        "status": "completed",
+        "verified": true
+      }
+    ]
+  },
+  "D5": {
+    "underpaid": {
+      "paymentId": "pay_48fcd00964b744c9a6e9a4f3",
+      "depositTx": "b06deb3d479a7231b3c76628f41bcd0d29bcb943b8c035a99e1f2d097f852635",
+      "depositLedgerClosedAt": "2026-10-22T22:40:12.000Z",
+      "refundTx": "720eefab9cebf440cac32290fe7c439e4b7b9a65d118f61aa3aca9a0fd2d9d61",
+      "refundLedgerClosedAt": "2026-10-22T22:40:37.000Z",
+      "secondsDepositToRefund": 25,
+      "memo": "vants:rf:s1:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.2500000",
+      "refundAsset": "USDC",
+      "refundedWebhookVerified": true
+    },
+    "unknownMuxedId": {
+      "depositTx": "b1a02f08aacacbd50015af043925abb84593bc355b4f852e456465eed3d38f5a",
+      "depositLedgerClosedAt": "2026-10-22T22:40:47.000Z",
+      "refundTx": "48e72a7f319fa87e353ae1873599f30d7c984a9f22213786ec6b2fedc75ea44a",
+      "refundLedgerClosedAt": "2026-10-22T22:41:02.000Z",
+      "secondsDepositToRefund": 15,
+      "memo": "vants:rf:4lajqu1:u1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.1000000",
+      "refundAsset": "USDC"
+    },
+    "wrongAsset": {
+      "paymentId": "pay_8b40d9455b3946c6a43dc818",
+      "depositTx": "b99e466e3f0c4e4411169b91caed7ba2a1b6f724aa15df3cc0ce22c8fc19facd",
+      "depositLedgerClosedAt": "2026-10-22T22:41:07.000Z",
+      "refundTx": "8f8c3999c2ee52913196d309270b96a51de8d093dc113fb8cefaecf5f960703e",
+      "refundLedgerClosedAt": "2026-10-22T22:41:32.000Z",
+      "secondsDepositToRefund": 25,
+      "memo": "vants:rf:s2:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "1.0000000",
+      "refundAsset": "native",
+      "refundedWebhookVerified": true
+    },
+    "late": {
+      "paymentId": "pay_c4d1e01265a74920abab3d69",
+      "depositTx": "ae077ccf88e95ea8c6e62af4dfed3f3f1684cbe31a7940631d7144b99d9857c5",
+      "depositLedgerClosedAt": "2026-10-22T22:41:37.000Z",
+      "refundTx": "a940b142b7dc0ee6688407ccb2bbbe77deee5156f5eaf97b3e171eacb06381e3",
+      "refundLedgerClosedAt": "2026-10-22T22:42:07.000Z",
+      "secondsDepositToRefund": 30,
+      "memo": "vants:rf:rz:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.5000000",
+      "refundAsset": "USDC",
+      "refundedWebhookVerified": true
+    }
+  },
+  "D4": {
+    "pier": {
+      "simulated": true,
+      "replayStatuses": [
+        200,
+        200
+      ],
+      "forgedStatuses": [
+        401,
+        401
+      ],
+      "paymentBefore": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "13",
+        "notes": "4"
+      },
+      "paymentAfter": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "13",
+        "notes": "4"
+      }
+    },
+    "hodle": {
+      "simulated": true,
+      "replayStatuses": [
+        200,
+        200
+      ],
+      "forgedStatuses": [
+        401
+      ],
+      "paymentBefore": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "13",
+        "notes": "4"
+      },
+      "paymentAfter": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "14",
+        "notes": "4"
+      }
+    }
+  },
+  "finishedAt": "2026-10-22T22:42:26.455Z",
+  "checks": [
+    {
+      "check": "D1 payout completed and the signed payment.updated webhook says completed",
+      "ok": true,
+      "detail": "pay_eb98bcc2f6be4260b31af3f0"
+    },
+    {
+      "check": "D1 webhooks are all signed and verify",
+      "ok": true,
+      "detail": "4 received"
+    },
+    {
+      "check": "D5 underpaid (0.25 of 0.5 USDC): refunded to the sender within 60 s, tagged vants:rf:s1:1",
+      "ok": true,
+      "detail": "25 s"
+    },
+    {
+      "check": "D5 unknown muxed id 9994636441 (0.1 USDC): refunded to the sender within 60 s, tagged vants:rf:4lajqu1:u1",
+      "ok": true,
+      "detail": "15 s"
+    },
+    {
+      "check": "D5 wrong asset (1 XLM to a USDC payment): refunded to the sender within 60 s, tagged vants:rf:s2:1",
+      "ok": true,
+      "detail": "25 s"
+    },
+    {
+      "check": "D5 late (paid after the quote expired): refunded to the sender within 60 s, tagged vants:rf:rz:1",
+      "ok": true,
+      "detail": "30 s"
+    },
+    {
+      "check": "D4 Pier replays are accepted (2xx) and change nothing (simulated)",
+      "ok": true,
+      "detail": "HTTP 200, 200"
+    },
+    {
+      "check": "D4 forged Pier deliveries get 401 and store nothing (simulated)",
+      "ok": true,
+      "detail": "HTTP 401, 401"
+    },
+    {
+      "check": "D4 Hodle replays are stored once and change nothing (simulated)",
+      "ok": true,
+      "detail": "HTTP 200, 200"
+    },
+    {
+      "check": "D4 forged Hodle PAYOUT_FAILED gets 401; the payment stays completed (simulated)",
+      "ok": true,
+      "detail": "HTTP 401"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@vants/worker",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0",
+    "@vants/adapter-cctp": "workspace:*",
+    "@vants/adapter-defindex": "workspace:*",
+    "@vants/adapter-hodle": "workspace:*",
+    "@vants/adapter-pier": "workspace:*",
+    "@vants/adapter-stellar": "workspace:*",
+    "@vants/config": "workspace:*",
+    "@vants/db": "workspace:*",
+    "@vants/domain": "workspace:*",
+    "@vants/pix": "workspace:*",
+    "standardwebhooks": "1.1.1"
+  },
+  "devDependencies": {
+    "pg": "8.23.1",
+    "@types/pg": "8.23.1"
+  }
+}

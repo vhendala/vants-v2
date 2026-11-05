@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-23T09:05:45.356Z",
+  "account": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+  "deposit": {
+    "txHash": "479dcbfbff86c7cf66e6a220c032d90ff1b6440afe4e38646db5b6db134e70db",
+    "summary": [
+      "Investir 60 lumens em Lumens que rendem",
+      "O rendimento começa na hora"
+    ]
+  },
+  "exit": {
+    "id": "ext_e15adbb9bf3d4fe2a03e",
+    "paymentId": "pay_67623b339ecb4e7fbfd8a51b",
+    "route": "router",
+    "asset": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    "summary": [
+      "Resgatar 9,4582454 lumens de Lumens que rendem",
+      "Trocar até 9,4582454 lumens por 1 dólar digital",
+      "Pagar 1 dólar digital à Vants"
+    ],
+    "txHash": "41e84394edd4029210986f1d17c9c4abf752c7e7c0c5c94b3c68612e7db01253"
+  },
+  "signatures": 1,
+  "operations": 1,
+  "paymentStatus": "completed",
+  "endToEndId": "SANDBOX0F2C23DC2B7F406992927F8D0",
+  "secondsAfterSigning": 14.546
+}

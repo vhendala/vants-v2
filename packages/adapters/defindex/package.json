@@ -1,0 +1,9 @@
+{
+  "name": "@vants/adapter-defindex",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0"
+  }
+}

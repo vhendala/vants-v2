@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-10-23T10:47:28.279Z",
+  "account": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+  "trustline": {
+    "txHash": "b6f590700392d5de201dcd262799a5fcf9788759d73942206b49d7ba423afa9e",
+    "summary": [
+      "Permitir que sua carteira receba Tesouro",
+      "Uma vez só: meio lumen fica reservado na carteira"
+    ]
+  },
+  "buy": {
+    "txHash": "904e2abddfafd9dcb2619b7363a05070ba7b9aaeb5d6cca95f97828f27d7f635",
+    "summary": [
+      "Comprar 24,068333 unidades de Tesouro com até 6,3979788 lumens",
+      "O Tesouro rende em reais, todo dia"
+    ]
+  },
+  "position": {
+    "id": "classic:TESOURO:GC3CW7EDYRTWQ635VDIGY6S4ZUF5L6TQ7AA4MWS7LEQDBLUSZXV7UPS4",
+    "kind": "classic",
+    "asset": "TESOURO:GC3CW7EDYRTWQ635VDIGY6S4ZUF5L6TQ7AA4MWS7LEQDBLUSZXV7UPS4",
+    "amount": "24.068333",
+    "valueUsd": "5.55",
+    "pricing": "estimated",
+    "payable": true,
+    "exit": {
+      "steps": 2,
+      "slippageBps": 100,
+      "estimated": true
+    }
+  },
+  "exit": {
+    "id": "ext_10ff3f02bdda42b7bf82",
+    "paymentId": "pay_0d810988bd8046b4b4ad2318",
+    "route": "classic",
+    "asset": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    "summary": [
+      "Enviar 1 dólar digital para a Vants pagar o Pix, usando até 4,3778109 unidades de Tesouro"
+    ],
+    "txHash": "b67c1a40beea945e7bdf97ab0ef1126e7f91619442d5f634052ef77cfd6c1607"
+  },
+  "signatures": 1,
+  "operations": 1,
+  "paymentStatus": "completed",
+  "endToEndId": "SANDBOXFFE5F8B2996B4CB48B7696EC9",
+  "secondsAfterSigning": 18.742
+}

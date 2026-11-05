@@ -1,0 +1,5 @@
+# HTTPS with an automatic Let's Encrypt certificate for VANTS_HOST (e.g. 34-1-2-3.sslip.io). The public face is Vercel,
+# which forwards /app, /auth, /.well-known, /ingress and /v0 here (deploy/web.sh).
+{$VANTS_HOST} {
+	reverse_proxy api:3100
+}

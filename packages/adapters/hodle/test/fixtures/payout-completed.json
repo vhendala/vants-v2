@@ -1,0 +1,36 @@
+{
+  "source": "spike 2026-10-22T19-56-03-101Z-003-hodle-payout-fixed-1.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "POST",
+    "url": "/api/wallet/payout",
+    "body": {
+      "value": 1234,
+      "asset": "USDH",
+      "network": "base",
+      "qrCode": "00020126490014br.gov.bcb.pix0127pix-spike@vants.example.com520400005303986540512.345802BR5911VANTS TESTE6009SAO PAULO62260522VHODLEMVJYO9TKQEXP734A6304203B",
+      "externalId": "vants-mvjyo8et-fixed-1"
+    }
+  },
+  "response": {
+    "status": 202,
+    "headers": {
+      "content-type": "application/json",
+      "x-hodle-sandbox": "simulated"
+    },
+    "body": {
+      "success": true,
+      "transactionId": "6ada6a513d373872025e1cdf",
+      "externalId": "vants-mvjyo8et-fixed-1",
+      "status": "COMPLETED",
+      "stableAmount": "2.285185",
+      "valueInBrl": "12.34",
+      "fee": "0.00",
+      "network": "base-sepolia",
+      "asset": "USDH",
+      "endToEndId": "SANDBOX5BAA9F4CCA844630AB7EC7300",
+      "txHash": "0xccc48d16078d8d95bf1761d57c2047d41f2da463490ab22252f60af0aa44dbed",
+      "explorerUrl": "https://sepolia.basescan.org/tx/0xccc48d16078d8d95bf1761d57c2047d41f2da463490ab22252f60af0aa44dbed",
+      "sandbox": true
+    }
+  }
+}

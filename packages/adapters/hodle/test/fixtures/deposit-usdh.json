@@ -1,0 +1,33 @@
+{
+  "source": "spike 2026-10-22T20-18-18-604Z-027-hodle-deposit-USDH.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "POST",
+    "url": "/api/deposit/asset",
+    "body": {
+      "value": 10749,
+      "asset": "USDH"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-hodle-sandbox": "simulated"
+    },
+    "body": {
+      "success": true,
+      "externalId": "919932f8-55c8-4e90-bbc4-b699fd63993b",
+      "walletCharge": "6ada6f8a3d373872025e21b0",
+      "qrCode": "00020126580014br.gov.bcb.pix0136sandbox-1135b54b-917a-408d-a65c-3c899858f05e5204000053039865802BR5909HODLE-SBX6009SAO PAULO62070503***6304SBX0",
+      "trackId": "1135b54b-917a-408d-a65c-3c899858f05e",
+      "fee": 0,
+      "fxRateAtTx": 5.4,
+      "address": "0xDF93D84684bb70f70073e3Ab7B85aeAC81bCC7C8",
+      "network": "base-sepolia",
+      "sandbox": {
+        "payable": false,
+        "settle": "POST /avenia/webhook with ticket.id \"1135b54b-917a-408d-a65c-3c899858f05e\" and your hodle_test_ key"
+      }
+    }
+  }
+}

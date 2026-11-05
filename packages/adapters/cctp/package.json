@@ -1,0 +1,10 @@
+{
+  "name": "@vants/adapter-cctp",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0",
+    "viem": "2.57.8"
+  }
+}

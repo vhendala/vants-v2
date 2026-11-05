@@ -1,0 +1,58 @@
+{
+  "startedAt": "2026-10-23T00:01:38.403Z",
+  "routerId": "CC3UZVNRHSTQS5BCPWCUTLOYPM24MERBQ433GANF5WKQ77WHNYWA25ZY",
+  "router": {
+    "paymentId": "pay_39ed47254442493790b600ef",
+    "route": "router",
+    "picks": [
+      "defindex:CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN"
+    ],
+    "plan": {
+      "ok": true,
+      "route": "router",
+      "amount7": "10000000",
+      "withdraw": {
+        "vault": "CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+        "shares7": "10000000",
+        "minOut7": "10000000"
+      },
+      "fromBalance7": "0"
+    },
+    "summary": [
+      "Withdraw 1 USDC from your DeFindex vault (1 shares)",
+      "Pay 1 USDC to Vants"
+    ],
+    "txHash": "b248e2992bc37249be85b372267d90b6fb0b19671c6f8192f0020105bb031843",
+    "operations": 1,
+    "signatures": 1,
+    "status": "completed"
+  },
+  "classic": {
+    "paymentId": "pay_f448970802554fcaad1049a5",
+    "route": "classic",
+    "picks": [
+      "classic:native"
+    ],
+    "plan": {
+      "ok": true,
+      "route": "classic",
+      "amount7": "5000000",
+      "fromBalance7": "0",
+      "swaps": [
+        {
+          "from": "native",
+          "receive7": "5000000",
+          "slippageBps": 100
+        }
+      ]
+    },
+    "summary": [
+      "Swap at most 0.575429 XLM for 0.5 USDC",
+      "Pay 0.5 USDC to Vants"
+    ],
+    "txHash": "00a47c1c473362e415c7772663981b9b61455aa9932a15b0adf500ff970655d3",
+    "operations": 2,
+    "signatures": 1,
+    "status": "completed"
+  }
+}

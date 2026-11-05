@@ -1,0 +1,28 @@
+{
+  "source": "spike 2026-10-22T20-18-20-900Z-028-hodle-settle-deposit.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "POST",
+    "url": "/avenia/webhook",
+    "body": {
+      "event": {
+        "subscription": "TICKET",
+        "data": {
+          "type": "DEPOSIT-SUCCESS",
+          "ticket": {
+            "id": "1135b54b-917a-408d-a65c-3c899858f05e"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "received": true,
+      "settled": true
+    }
+  }
+}

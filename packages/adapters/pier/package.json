@@ -1,0 +1,12 @@
+{
+  "name": "@vants/adapter-pier",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./webhook": "./src/webhook.ts"
+  },
+  "dependencies": {
+    "standardwebhooks": "1.1.1"
+  }
+}

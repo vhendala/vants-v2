@@ -1,0 +1,81 @@
+{
+  "check": "D7: the books balance (ledger vs Horizon and vs the Hodle sandbox balance)",
+  "opening": [
+    {
+      "account": "float:hodle",
+      "asset": "USDH",
+      "amount": "22129634"
+    },
+    {
+      "account": "treasury",
+      "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "amount": "25000000"
+    },
+    {
+      "account": "treasury",
+      "asset": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "amount": "100045801267"
+    }
+  ],
+  "traffic": "pnpm e2e run g-b-2026-10-22T23-16-54.786Z (D1 + D5 x4 + D4 Pier)",
+  "reconciliation": [
+    {
+      "at": "2026-10-22T23:19:53.068325+00:00",
+      "scope": "treasury",
+      "asset": "native",
+      "ledger": "100045800867",
+      "actual": "100045800867",
+      "diff": "0",
+      "status": "ok"
+    },
+    {
+      "at": "2026-10-22T23:19:53.068325+00:00",
+      "scope": "treasury",
+      "asset": "USDC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "ledger": "0",
+      "actual": "0",
+      "diff": "0",
+      "status": "ok"
+    },
+    {
+      "at": "2026-10-22T23:19:53.068325+00:00",
+      "scope": "treasury",
+      "asset": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+      "ledger": "30000000",
+      "actual": "30000000",
+      "diff": "0",
+      "status": "ok"
+    },
+    {
+      "at": "2026-10-22T23:19:53.068325+00:00",
+      "scope": "float",
+      "asset": "USDH",
+      "ledger": "21629634",
+      "actual": "21629634",
+      "diff": "0",
+      "status": "ok"
+    }
+  ],
+  "ledgerSumsPerAsset": [
+    {
+      "asset": "USDH",
+      "sum": "0"
+    },
+    {
+      "asset": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "sum": "0"
+    },
+    {
+      "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "sum": "0"
+    }
+  ],
+  "entriesByEventType": {
+    "DepositMatched": 8,
+    "TreasuryFeePaid": 8,
+    "UnattributedDeposit": 2,
+    "PayoutCompleted": 4,
+    "RefundSent": 8,
+    "LedgerOpened": 6
+  }
+}

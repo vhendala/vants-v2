@@ -1,0 +1,26 @@
+{
+  "startedAt": "2026-10-23T10:16:42.740Z",
+  "publicBaseUrl": "https://vants.example.com",
+  "stellarToml": {
+    "WEB_AUTH_ENDPOINT": "https://vants.example.com/auth",
+    "SIGNING_KEY": "GCDHKT73WCJ5KZI5F6KK7ZM5GEO5YMUFYCZOPYCA4HWAR75HO5O26ZCJ"
+  },
+  "login": "SEP-10 challenge verified (server signature) and signed by the account; JWT issued",
+  "freshAccount": false,
+  "operationTypes": [
+    "pathPaymentStrictReceive"
+  ],
+  "exit": {
+    "id": "ext_1ffb905af3ed42849d04",
+    "paymentId": "pay_98ccdb484817470c92ce7172",
+    "route": "classic",
+    "summary": [
+      "Enviar 0,5 dólares digitais para a Vants pagar o Pix, usando até 0,5758142 lumens"
+    ],
+    "txHash": "8e6f9531fcf8f6cf14b2b149de1091643f82451ac804bb69b5e88822ae712252"
+  },
+  "signatures": 1,
+  "operations": 1,
+  "submitHttp": 202,
+  "paymentStatus": "completed"
+}

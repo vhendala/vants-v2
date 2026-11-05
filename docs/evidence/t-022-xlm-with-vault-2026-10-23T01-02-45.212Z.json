@@ -1,0 +1,93 @@
+{
+  "startedAt": "2026-10-23T01:02:45.212Z",
+  "routerId": "CAAQ3E4AQK7P53T6QSUTPDS3UIBS267CT53BPFHTNQKEZNUGTO5RADPB",
+  "router": {
+    "paymentId": "pay_70ac1d98588c481590f3d108",
+    "route": "router",
+    "picks": [
+      "defindex:CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN"
+    ],
+    "plan": {
+      "ok": true,
+      "route": "router",
+      "amount7": "10000000",
+      "withdraw": {
+        "vault": "CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+        "shares7": "10000000",
+        "minOut7": "10000000"
+      },
+      "fromBalance7": "0",
+      "swap": null
+    },
+    "summary": [
+      "Sacar 1 USDC do seu cofre DeFindex (1 cotas)",
+      "Pagar 1 USDC à Vants"
+    ],
+    "txHash": "dfd5f593366a1a8bd6cfae4a3ece289de47a7ae22757b3c2c1501333570898c8",
+    "operations": 1,
+    "signatures": 1,
+    "status": "completed"
+  },
+  "classic": {
+    "paymentId": "pay_e6abbffa306b44e7919c67a1",
+    "route": "classic",
+    "picks": [
+      "classic:native"
+    ],
+    "plan": {
+      "ok": true,
+      "route": "classic",
+      "amount7": "5000000",
+      "fromBalance7": "0",
+      "swaps": [
+        {
+          "from": "native",
+          "receive7": "5000000",
+          "slippageBps": 100,
+          "spendable7": "99378169689"
+        }
+      ]
+    },
+    "summary": [
+      "Pagar 0,5 USDC à Vants, trocando até 0,5755562 XLM"
+    ],
+    "txHash": "7c8f8cf78c25bd76bbb8b135d7d8057cf450a3c67b220200db096a00e101b86a",
+    "operations": 1,
+    "signatures": 1,
+    "status": "completed"
+  },
+  "routerXlm": {
+    "paymentId": "pay_5e1c044b874c46fab3040787",
+    "route": "router",
+    "picks": [
+      "defindex:CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+      "classic:native"
+    ],
+    "plan": {
+      "ok": true,
+      "route": "router",
+      "amount7": "1794444445",
+      "withdraw": {
+        "vault": "CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+        "shares7": "1692611105",
+        "minOut7": "1692611105"
+      },
+      "fromBalance7": "0",
+      "swap": {
+        "from": "native",
+        "receive7": "101833340",
+        "slippageBps": 100,
+        "spendable7": "99952615880"
+      }
+    },
+    "summary": [
+      "Sacar 169,2611105 USDC do seu cofre DeFindex (169,2611105 cotas)",
+      "Trocar até 44,7044568 XLM por 10,183334 USDC na Soroswap",
+      "Pagar 179,4444445 USDC à Vants"
+    ],
+    "txHash": "e22bf4c6c51dda9cff8aa1f8836b865a2481d36c35e6750715c2a8d324c35c83",
+    "operations": 1,
+    "signatures": 1,
+    "status": "completed"
+  }
+}

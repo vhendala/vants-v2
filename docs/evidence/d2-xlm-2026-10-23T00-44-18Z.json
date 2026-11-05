@@ -1,0 +1,38 @@
+{
+  "check": "D2 (partial: XLM route)",
+  "recordedBy": "agent, from the database and the ledger, after the human's run in the real UI",
+  "network": "Stellar testnet + Hodle sandbox (simulated Pix)",
+  "url": "https://<tunnel>.ngrok-free.dev/",
+  "account": "GCYGHQHGHVQALH4TFUA4EZKQXZQAJ2PFSOXOVVH7UTT6ZNM4BQMVPLOP",
+  "wallet": "a browser wallet through Stellar Wallets Kit 2.7.1 (which one is not recorded server-side)",
+  "brCodeValueBrl": "20.00",
+  "exit": {
+    "id": "ext_e960f2a540924f70aa37",
+    "paymentId": "pay_2f79c87628d64de7813057d8",
+    "route": "classic",
+    "picks": ["classic:native"],
+    "summary": ["Pagar 3,7037038 USDC à Vants, trocando até 4,2624629 XLM"],
+    "signatures": 1,
+    "stellarTx": "13e58ebc3185953623e4e9dd88b9b1dab8b778edd4f2f73921f397a284a1544e"
+  },
+  "payout": {
+    "status": "completed",
+    "hodleTransactionId": "6adaade13d373872025e40b0",
+    "endToEndId": "SANDBOXB160197A070242D4A6AC96305",
+    "hodleTxHash": "0x2552a8818f827e0bfba036c79297cf7f187b618498b51698e034d2b412f01d66",
+    "debitUsdh6": "3703703",
+    "fee": "0.00"
+  },
+  "timeline": {
+    "planned": "2026-10-23T00:43:52.550Z",
+    "submitted": "2026-10-23T00:44:08.126Z",
+    "ledgerClosed": "2026-10-23T00:44:12.000Z",
+    "depositMatched": "2026-10-23T00:44:13.994Z",
+    "paid": "2026-10-23T00:44:18.939Z",
+    "plannedToPaidSeconds": 26.4,
+    "signedToPaidSeconds": 10.8
+  },
+  "before": "Four POST /app/exits attempts at 00:39:34–00:40:08 got 409 FLOAT_UNAVAILABLE (no quote rows: refused inside the rolled-back transaction). Pricing didn't check the float then, so the refusal came only after the pick. Fixed: POST /app/exits/quote now refuses first.",
+  "notCovered": "The D2 script asks for USDC then a DeFindex vault; this run paid from XLM only. The account holds no Circle USDC and no DeFindex shares.",
+  "reconcileAfter": "0 on all five accounts (after a 100 USDH manual top-up, booked as FloatCredited)"
+}

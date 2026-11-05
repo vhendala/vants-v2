@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- The link-preview card (og:image, twitter:image): edit here, then screenshot it with headless Chrome at 1200×630, 1×,
+     JPEG quality 76 (4:2:0, stripped; under 100 KB), into public/og.jpg. The welcome screen's brand moment (DEC-049): its photograph of paying at a café counter
+     on the left (og/counter-payment.jpg), the brand ink on the right with the reversed logo and the welcome words. -->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face { font-family: "Bricolage Grotesque"; src: url("../public/fonts/BricolageGrotesque-Variable.woff2") format("woff2"); font-weight: 200 800; }
+      @font-face { font-family: "Manrope"; src: url("../public/fonts/Manrope-Variable.woff2") format("woff2"); font-weight: 200 800; }
+      :root {
+        --ink: oklch(18% 0.022 218);
+        --blue-700: oklch(44% 0.13 218);
+        --green-400: oklch(74% 0.13 155);
+        --overlap-reverse: oklch(90% 0.06 155);
+      }
+      * { margin: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--ink); }
+      body { display: grid; grid-template-columns: 540px 1fr; font-family: Manrope, system-ui, sans-serif; color: oklch(99.4% 0.0015 250); }
+      .photo { position: relative; overflow: hidden; }
+      .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; display: block; }
+      .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, oklch(18% 0.022 218 / 0) 70%, oklch(18% 0.022 218 / 0.9)); }
+      .copy { display: flex; flex-direction: column; padding: 64px 64px 60px 44px; }
+      .logo { height: 44px; width: 134px; }
+      h1 {
+        margin-top: auto;
+        font-family: "Bricolage Grotesque", Manrope, sans-serif;
+        font-size: 60px; line-height: 1.02; font-weight: 700; letter-spacing: -0.035em;
+      }
+      p { margin-top: 22px; font-size: 24px; line-height: 1.38; font-weight: 500; color: oklch(86% 0.006 250); }
+    </style>
+  </head>
+  <body>
+    <figure class="photo"><img src="counter-payment.jpg" alt="" /></figure>
+    <section class="copy">
+      <svg class="logo" viewBox="0 0 195 64" aria-label="Vants">
+        <path d="M6 16 L19 16 L36 52 L23 52Z" fill="oklch(99.4% 0.0015 250)" />
+        <path d="M45 8 L58 8 L41 52 L28 52Z" fill="var(--green-400)" />
+        <path d="M31.6 42.68 L36 52 L28 52Z" fill="var(--overlap-reverse)" />
+        <path d="M150.3 0 3.6 -526H154.2L240 -119.7H244.6L333.5 -526H477.5L330.6 0Z M619.2 13.1Q582.1 13.1 550.3 -1.3Q518.5 -15.8 499 -46.1Q479.5 -76.5 479.5 -124.4Q479.5 -171 496.8 -200.8Q514.1 -230.7 543 -249.4Q571.9 -268.2 606.4 -278.6Q640.8 -289.1 674.3 -296.8Q718.7 -307 741 -314.3Q763.2 -321.6 771.1 -331.5Q778.9 -341.3 778.9 -357.7Q778.9 -391.1 759.6 -408.4Q740.2 -425.7 708.7 -425.7Q687.7 -425.7 668.7 -415.4Q649.8 -405.1 638.5 -381.7Q627.3 -358.3 628.6 -318.7L497.9 -330.5Q496.5 -388.1 513.8 -428.1Q531.1 -468.2 562 -492.5Q592.9 -516.9 632 -528Q671.2 -539.2 713.7 -539.2Q781.4 -539.2 826.9 -513Q872.4 -486.9 895.3 -436Q918.2 -385.1 918.2 -309.4V-204.8Q918.3 -170.8 918.4 -136.5Q918.5 -102.1 918.6 -68.1Q918.7 -34 918.7 0H793.9Q794.8 -37.7 795.4 -75.4Q796.1 -113.2 796.8 -153.8H789.8Q785 -105 762.4 -67.2Q739.7 -29.5 703.3 -8.2Q666.8 13.1 619.2 13.1ZM676.8 -95.6Q694.4 -95.6 712.2 -104Q730 -112.3 744.9 -129Q759.9 -145.7 769 -170.9Q778.1 -196 778.3 -228.8L778.4 -265.3L804.1 -273.5Q795.5 -260.3 778.4 -251.9Q761.3 -243.5 740.5 -238Q719.6 -232.6 698.6 -226.8Q677.7 -220.9 660.1 -212.2Q642.5 -203.5 631.6 -189.3Q620.6 -175.2 620.6 -152Q620.6 -123.5 636.9 -109.6Q653.1 -95.6 676.8 -95.6Z M962.4 0V-294.1L962 -526H1084.5L1080.9 -314.4H1089.2Q1093.7 -393 1112.3 -442.4Q1130.8 -491.9 1164.6 -515.5Q1198.4 -539.2 1248.2 -539.2Q1325.8 -539.2 1363.6 -483.5Q1401.3 -427.8 1401.3 -313.4V0H1258.9V-291Q1258.9 -353 1244.3 -382.4Q1229.7 -411.8 1195.7 -411.8Q1166 -411.8 1145.7 -387.8Q1125.3 -363.8 1115 -316Q1104.6 -268.1 1104.6 -195.5V0Z M1635.4 10.2Q1553.4 10.2 1511.3 -34.5Q1469.3 -79.1 1469.3 -170.7V-414.2H1418.5V-507.7H1428.8Q1475.9 -512.2 1495.1 -537.2Q1514.2 -562.1 1518.9 -612.5L1521.7 -638.5H1609.3V-526H1715.8V-411.1H1609.3V-189Q1609.3 -151.4 1625.2 -134.5Q1641 -117.5 1665.9 -117.5Q1678.4 -117.5 1691.5 -121.4Q1704.6 -125.2 1715.9 -132.6V-2.2Q1692.3 5 1672.5 7.6Q1652.6 10.2 1635.4 10.2Z M1957.8 13.1Q1904.2 13.1 1862 0.3Q1819.8 -12.4 1791.5 -37.8Q1763.2 -63.2 1750.7 -101.3Q1738.2 -139.4 1744.2 -189.7L1869.2 -200.8Q1868.6 -165.5 1878.5 -140.1Q1888.4 -114.7 1909 -101.5Q1929.6 -88.3 1961.1 -88.3Q1992.1 -88.3 2011.9 -100.7Q2031.7 -113.1 2031.7 -139.5Q2031.7 -160.2 2020.7 -173.4Q2009.6 -186.6 1986.6 -196.7Q1963.5 -206.8 1927.2 -217.9Q1888.2 -229.6 1854.5 -242Q1820.8 -254.4 1795.7 -272Q1770.7 -289.5 1756.9 -315.3Q1743.1 -341.1 1743.1 -378.6Q1743.1 -428.8 1768.6 -464.7Q1794.2 -500.5 1840.4 -519.8Q1886.6 -539.2 1949.1 -539.2Q2007.2 -539.2 2054.8 -519.9Q2102.5 -500.7 2128.8 -458.4Q2155.1 -416.2 2147.9 -347.2L2025.5 -333.4Q2028.7 -364.7 2019.2 -387.6Q2009.8 -410.5 1990.7 -422.9Q1971.6 -435.2 1943.6 -435.2Q1912.5 -435.2 1895 -421.4Q1877.5 -407.6 1877.5 -385.8Q1877.5 -366.9 1889.7 -354.2Q1902 -341.5 1925.5 -332.7Q1949 -323.8 1982.4 -314.1Q2013.3 -305.2 2046 -293Q2078.7 -280.7 2106.4 -261.8Q2134.1 -242.8 2151.2 -213.8Q2168.3 -184.8 2168.3 -141.8Q2168.3 -95.9 2144.4 -60.7Q2120.5 -25.6 2073.9 -6.2Q2027.3 13.1 1957.8 13.1Z" transform="translate(66.79 52) scale(0.05638)" fill="oklch(99.4% 0.0015 250)" />
+      </svg>
+      <h1>Pague qualquer Pix com a sua carteira</h1>
+      <p>Com dólar digital, lumens ou o que você investiu. Se o Pix não sair, o dinheiro volta sozinho.</p>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "startedAt": "2026-10-22T22:58:17.873Z",
+  "publicBaseUrl": "https://<tunnel>.ngrok-free.dev",
+  "payout": {
+    "paymentId": "pay_fd8c901da15745a3b30c9ccc",
+    "depositTx": "580e6797c98b955413b9646de451487921c38e493b6ccfc4fbcecc1cf8ec695f",
+    "hodleEndToEndId": "SANDBOX32C15B438B8B4A4A8EB1C97A3",
+    "hodleTxHash": "0x06ac158f1856f3fb74ccd26991c49cf911a0a493637935592978db77d953153d",
+    "webhooks": [],
+    "matchedToPayout": false
+  },
+  "deposit": {
+    "trackId": "1359b2ee-0cdb-4a88-9d5b-ed8dca5db391",
+    "externalId": "6b1219d2-93f6-468b-9e4d-8d5528801b78",
+    "settled": true,
+    "webhooks": []
+  },
+  "D4": [
+    {
+      "uri": "/ingress/pier",
+      "deliveredAt": "2026-10-22T23:58:22+01:00",
+      "originalStatus": 200,
+      "replayStatuses": [
+        200,
+        200
+      ],
+      "tamperedStatus": 401,
+      "ageSeconds": 133,
+      "before": {
+        "inbox": 16,
+        "deposits": 14,
+        "refunds": 9,
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "confirmed": false
+      },
+      "after": {
+        "inbox": 16,
+        "deposits": 14,
+        "refunds": 9,
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "confirmed": false
+      }
+    }
+  ],
+  "finishedAt": "2026-10-22T23:02:39.902Z",
+  "checks": [
+    {
+      "check": "the payment completed (sandbox payout)",
+      "ok": true,
+      "detail": "completed"
+    },
+    {
+      "check": "Pier pushed the deposit through the tunnel",
+      "ok": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "check": "T-007 the sandbox USDH payout emitted PAYOUT_SUCCESSFUL",
+      "ok": false,
+      "detail": "nothing in 120 s"
+    },
+    {
+      "check": "D4 /ingress/pier: genuine delivery replayed twice is a no-op; tampered copy → 401",
+      "ok": true,
+      "detail": "replays 200, 200, tampered 401, 133 s after the original"
+    },
+    {
+      "check": "T-007 a settled sandbox deposit emitted DEPOSIT_ASSET_SUCCESS",
+      "ok": false,
+      "detail": "nothing in 120 s"
+    }
+  ]
+}

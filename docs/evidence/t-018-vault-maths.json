@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-10-22T23:47:27.286Z",
+  "check": "T-018: DeFindex share maths vs the vault contract (get_asset_amounts_per_shares), testnet",
+  "vault": "CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+  "state": {
+    "totalSupply": "13555464417",
+    "totalAmount": "13555464417",
+    "idle": "13555464417",
+    "invested": "0"
+  },
+  "holder": "GCBWUAIIB6UXWOGJWQDF5MP3DSVXBTOYD5V3A754Q3ON7CGGRUWXVX5S",
+  "checks": [
+    {
+      "shares": "1712611105",
+      "ours": "1712611105",
+      "vault": "1712611105",
+      "equal": true
+    },
+    {
+      "shares": "1",
+      "ours": "1",
+      "vault": "1",
+      "equal": true
+    },
+    {
+      "shares": "12345678",
+      "ours": "12345678",
+      "vault": "12345678",
+      "equal": true
+    },
+    {
+      "shares": "4518488139",
+      "ours": "4518488139",
+      "vault": "4518488139",
+      "equal": true
+    }
+  ],
+  "sharesForOneUsdc": "10000000"
+}

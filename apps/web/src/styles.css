@@ -1,0 +1,1858 @@
+/* The Vants mini app, direction A "Comprovante" (T-044, DEC-060; replaces the T-026/T-030 system). Everything reads as
+   printed, like a till slip or a bank comprovante:
+   - colour: receipt paper, ink, and carimbo blue (the ink of a rubber stamp) for the one primary action, the dollars that
+     pay first and the band of a paid receipt. A screen's answer sits on an ink slab. Status is a word with a small mark.
+   - type: Archivo only. Condensed (72%) at 800 for money and titles; normal width for text. 13 / 14 / 16 / 22 / 32 / 56.
+   - containers: lists and facts are ledgers on the page (a 2px ink rule on top, hairlines between rows), never cards. The
+     receipt is a paper slip. Corners are square (3px).
+   - motion: state only. A paid band prints in from the left; nothing glows, pulses or counts up. */
+
+:root {
+  --panel: var(--bg-raised);
+  --panel-ring: 0 0 0 1px var(--line-strong);
+  --radius-panel: var(--radius-sm);
+  --divider-inset: 0px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font: 400 16px / 24px var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+p,
+li,
+dd {
+  text-wrap: pretty; /* no lone word on a paragraph's last line */
+}
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+dl,
+dd,
+figure,
+fieldset {
+  margin: 0;
+}
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+a {
+  color: inherit;
+}
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ---- type ---- */
+.t-title {
+  font: 800 32px / 34px var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.t-hero {
+  font: 800 min(56px, 14vw) / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+}
+.t-hero .cents {
+  color: inherit;
+}
+.t-section {
+  font: 800 22px / 26px var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.005em;
+}
+/* a group label over a ledger: a day, "Sai de" */
+.section > h2.t-label,
+.group-label {
+  font: 600 13px / 18px var(--font-sans);
+  color: var(--text-muted);
+}
+.t-label {
+  font: 500 14px / 20px var(--font-sans);
+  color: var(--text-muted);
+}
+.lede {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+.money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.id {
+  font: 400 13px / 18px var(--font-mono);
+  overflow-wrap: anywhere;
+}
+.muted {
+  color: var(--text-muted);
+}
+.secondary {
+  color: var(--text-secondary);
+}
+.small {
+  font-size: 14px;
+  line-height: 20px;
+}
+.fine {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-muted);
+}
+.center {
+  text-align: center;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.link,
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.link:hover,
+.link-btn:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- shell ---- */
+.app {
+  position: relative;
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+@media (min-width: 560px) {
+  body {
+    background: var(--bg-sunken);
+  }
+  .app {
+    border-inline: 1px solid var(--line-strong);
+  }
+}
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 8px 20px 32px;
+}
+.screen-tabs {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+.screen-dock {
+  padding-bottom: 24px;
+}
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+.icon-btn:hover {
+  background: var(--bg-sunken);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 60px;
+  padding: env(safe-area-inset-top) 8px 0 20px;
+  background: var(--bg);
+}
+.topbar-title {
+  font: 800 28px / 32px var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.01em;
+}
+.topbar-end {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.test-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 4px;
+  color: var(--text-muted);
+  font: 500 12px / 16px var(--font-sans);
+  white-space: nowrap;
+}
+.test-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--amber-500);
+}
+.account-btn {
+  color: var(--text);
+}
+
+.flow-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 56px;
+  padding: env(safe-area-inset-top) 12px 0 8px;
+  background: var(--bg);
+}
+.flow-title {
+  font: 600 16px / 24px var(--font-sans);
+}
+.steps {
+  margin-left: auto;
+  display: flex;
+  gap: 3px;
+  padding-right: 8px;
+}
+.step {
+  width: 14px;
+  height: 4px;
+  background: var(--line-strong);
+}
+.step.on {
+  background: var(--text);
+}
+
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 100%;
+  max-width: 480px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--line-strong);
+  view-transition-name: tabbar;
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 52px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font: 500 12px / 16px var(--font-sans);
+}
+.tab[aria-current="page"] {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--line-strong);
+}
+.dock-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+.dock-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* ---- ledgers: lists and facts sit on the page (T-044; replaces T-030's grouped panels) ----
+   A 2px ink rule opens a ledger, hairlines run between its rows, and one closes it. Notes and the receipt are paper slips. */
+.rows,
+.facts,
+.breakdown {
+  border-top: 2px solid var(--rule);
+  border-bottom: 1px solid var(--line-strong);
+}
+.surface,
+.panel {
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+.rows,
+.facts,
+.breakdown,
+.panel {
+  overflow: hidden;
+}
+.surface {
+  padding: 24px 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 32px;
+}
+.section-head .icon-btn {
+  margin-right: -10px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.panel .row,
+.panel.row {
+  padding-inline: 16px;
+}
+.row-btn {
+  width: 100%;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.row-title {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row-sub {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row-end {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+}
+.row-end .money {
+  font: 700 19px / 24px var(--font-display);
+  font-stretch: var(--stretch-display);
+}
+.row-off .row-title {
+  color: var(--text-muted);
+}
+.struck {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.go {
+  flex: none;
+  color: var(--text-muted);
+}
+.go-space {
+  flex: none;
+  width: 18px;
+}
+
+/* key / value rows (facts): a dotted leader runs from the label to its value, as on a printed comprovante */
+.facts > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 4px;
+}
+.facts dt {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.facts dt::after {
+  content: "";
+  flex: 1 1 16px;
+  min-width: 16px;
+  border-bottom: 1.5px dotted var(--gray-400);
+}
+.facts dd {
+  flex: 0 1 auto;
+  max-width: 62%;
+  text-align: right;
+  font-weight: 600;
+  min-width: 0;
+}
+
+/* ---- avatars and marks ---- */
+.avatar {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--gray-50);
+  color: var(--gray-800);
+  font: 700 14px / 1 var(--font-sans);
+  letter-spacing: 0.02em;
+}
+/* money marks (T-030; T-044): the money's own sign printed in a small square */
+.mark {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  font: 800 18px / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+}
+.mark-usd {
+  background: var(--text);
+  color: var(--gray-25);
+}
+.mark-xlm {
+  color: var(--text);
+  box-shadow: inset 0 0 0 1.5px var(--text);
+}
+.mark-brl {
+  background: var(--gray-50);
+  color: var(--text);
+  font-size: 14px;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+}
+.mark-other {
+  background: var(--gray-50);
+  color: var(--gray-700);
+  font: 700 13px / 1 var(--font-sans);
+}
+.avatar-lg {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+/* ---- status: a word with a small mark ---- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 13px / 16px var(--font-sans);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.status-done {
+  color: var(--text-secondary);
+}
+.status-done svg {
+  color: var(--yield-text);
+}
+
+/* ---- notices: one line of context, inline ---- */
+.notice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 20px;
+}
+.notice-icon {
+  flex: none;
+  margin-top: 1px;
+}
+.notice-info {
+  border: 1px solid var(--line-strong);
+  color: var(--text-secondary);
+}
+.notice-pending {
+  background: var(--pending-soft);
+  color: oklch(36% 0.07 65);
+}
+.notice-danger {
+  background: var(--danger-soft);
+  color: var(--red-900);
+}
+
+/* ---- details: one tap away ---- */
+.details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 4px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+.details summary::-webkit-details-marker {
+  display: none;
+}
+.details-chevron {
+  color: var(--text-muted);
+  transition: transform 200ms var(--ease-out);
+}
+.details[open] .details-chevron {
+  transform: rotate(180deg);
+}
+.details-body {
+  padding-bottom: 8px;
+}
+
+/* ---- skeleton ---- */
+/* Placeholders breathe (T-042: they visibly move, with reduced motion too): opacity only, no gradient sweep. */
+.bar {
+  display: block;
+  border-radius: var(--radius-xs);
+  background: var(--gray-100);
+  animation: breathe 1.4s ease-in-out infinite;
+}
+.avatar.bar {
+  border-radius: var(--radius-full);
+}
+@keyframes breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.loading-shape {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---- waiting (T-042): the note a long wait shows, and an operation's steps ---- */
+.wait-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+  animation: fade-in 200ms var(--ease-out) both;
+}
+.wait-note-icon {
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+.op-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0 4px;
+}
+.op-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+.op-step.done {
+  color: var(--text-secondary);
+}
+.op-step.now,
+.op-step.turn {
+  color: var(--text);
+  font-weight: 600;
+}
+.op-dot {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+}
+.op-step.done .op-dot {
+  background: var(--text);
+  color: var(--gray-25);
+  box-shadow: none;
+}
+.op-step.turn .op-dot {
+  background: var(--pending-soft);
+  color: var(--pending);
+  box-shadow: none;
+}
+.op-step.now .op-dot {
+  box-shadow: none;
+}
+.op-spin {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+/* A code the camera read: the picture dims while the price is worked out (the dock says so). */
+.camera-read video {
+  opacity: 0.45;
+  transition: opacity 200ms var(--ease-out);
+}
+.flow-header .icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+@media (prefers-reduced-motion: reduce) {
+  .op-spin {
+    animation: none;
+  }
+}
+
+/* ---- chips and the segmented switch (selected: ink) ---- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  font: 500 14px / 20px var(--font-sans);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip[aria-pressed="true"] {
+  border-color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--text);
+  color: var(--text);
+  font-weight: 600;
+}
+.chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1.5px solid var(--text);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.segmented button {
+  height: 40px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: 600 14px / 20px var(--font-sans);
+  cursor: pointer;
+}
+.segmented button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--gray-25);
+}
+
+/* ---- inputs ---- */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 12px;
+}
+.field-group legend {
+  margin-bottom: 12px;
+  padding: 0;
+}
+.field {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-half {
+  grid-column: auto;
+}
+.field-label {
+  font: 500 14px / 20px var(--font-sans);
+  color: var(--text-secondary);
+}
+.field-input,
+.text-input {
+  width: 100%;
+  height: 48px;
+  min-width: 0;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  font-size: 16px;
+}
+.field-input:focus-visible,
+.text-input:focus-visible {
+  outline: 0;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+::placeholder {
+  color: var(--text-placeholder);
+  opacity: 1;
+}
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.input-row .text-input {
+  flex: 1;
+}
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+.hint-ok {
+  color: var(--text-secondary);
+}
+.hint-ok svg {
+  color: var(--yield-text);
+}
+.hint-bad {
+  color: var(--danger);
+}
+.code-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  font: 400 13px / 20px var(--font-mono);
+  resize: none;
+  word-break: break-all;
+}
+.code-input:focus-visible {
+  outline: 0;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+
+/* ---- the amount: one pattern, the keypad ---- */
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0 0;
+  text-align: center;
+}
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 36px;
+  margin-left: 3px;
+  vertical-align: -4px;
+  background: var(--accent); /* steady: it marks where digits enter, it doesn't call for attention */
+}
+/* the amount sits midway between the header and the keypad, not stuck under the header (T-030) */
+.screen > .amount {
+  margin-top: auto;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: auto;
+}
+.keypad button {
+  height: 56px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font: 700 26px / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.keypad button:active {
+  background: var(--bg-sunken);
+}
+
+/* ---- who is paid (flows) ---- */
+.payee {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+}
+.payee-amount {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.payee-amount .money {
+  font: 800 22px / 28px var(--font-display);
+  font-stretch: var(--stretch-display);
+}
+
+/* ---- welcome (T-044; T-045): the photograph of paying at a counter, darkened, printed edge to edge across the top with a
+   hard edge (no fade); on the ink below, the words, the promises as a printed list and the wallet. ---- */
+.welcome {
+  position: relative;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+}
+.welcome-media {
+  flex: 1 1 0;
+  min-height: 200px;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) saturate(0.7) contrast(1.05);
+}
+.welcome-top {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(18px + env(safe-area-inset-top)) 20px 0;
+}
+.welcome-top .test-chip {
+  margin-right: 0;
+  color: var(--text-on-inverse-muted);
+}
+.welcome-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 20px calc(20px + env(safe-area-inset-bottom));
+}
+.welcome-body h1 {
+  font: 800 min(42px, 10.8vw) / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.welcome-body .lede {
+  color: var(--text-on-inverse-muted);
+}
+.promises {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border-top: 2px solid var(--text-on-inverse);
+  font-size: 15px;
+  line-height: 22px;
+}
+.promises li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid oklch(100% 0 0 / 0.16);
+}
+.promises .vt-icon {
+  flex: none;
+  color: var(--accent-on-inverse);
+}
+.welcome-actions {
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.welcome-ghost {
+  color: var(--text-on-inverse);
+}
+.welcome-ghost:hover {
+  background: oklch(100% 0 0 / 0.08);
+}
+.welcome .welcome-fine,
+.welcome .wait-note,
+.welcome .wait-note-icon {
+  color: var(--text-on-inverse-muted);
+}
+.welcome .notice-info {
+  border-color: oklch(100% 0 0 / 0.22);
+  color: var(--text-on-inverse-muted);
+}
+.welcome .vt-btn:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg-inverse),
+    0 0 0 4px var(--gray-25);
+}
+
+/* ---- home: the balance on the ink slab ---- */
+/* The ink slab: a screen's answer (the balance, a rate) printed in paper on ink, the full width of the screen. */
+.slab {
+  margin: 0 -20px;
+  padding: 20px 20px 22px;
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+}
+.slab .t-label,
+.slab .muted,
+.slab .secondary {
+  color: var(--text-on-inverse-muted);
+}
+.slab .bar {
+  background: oklch(100% 0 0 / 0.16);
+}
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.balance .t-hero {
+  font-size: min(60px, 15vw);
+  margin-top: 6px;
+}
+.balance-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-on-inverse-muted);
+}
+.kinds {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+.legend {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend .money {
+  margin-left: auto;
+  font-weight: 600;
+}
+.home-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pay-bar {
+  --_h: 64px;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 0 18px;
+  font-size: 18px;
+}
+.pay-bar > .vt-icon:last-child {
+  margin-left: auto;
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+}
+.empty-note {
+  padding: 16px;
+  color: var(--text-secondary);
+}
+.approx {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.earn-line {
+  color: var(--text-secondary);
+}
+
+/* ---- investing ---- */
+.offer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 12px 4px;
+  text-decoration: none;
+  color: inherit;
+}
+.offer-rate {
+  flex: none;
+  text-align: right;
+}
+.rate {
+  display: block;
+  font: 800 22px / 26px var(--font-display);
+  font-stretch: var(--stretch-display);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.rate-unit {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-muted);
+}
+.invest-total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.invest-total .money {
+  font: 800 min(52px, 13vw) / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.015em;
+  margin-top: 4px;
+}
+/* ---- moving money in and out (T-041): the option's rate on the ink slab, and the review's "from → to" ---- */
+.mark-lg {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+.mark-brl.mark-lg {
+  font-size: 18px;
+}
+.rate-figure {
+  font: 800 min(64px, 16vw) / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.015em;
+  margin: 8px 0 6px;
+}
+.rate-figure.words {
+  font-size: 34px;
+  line-height: 36px;
+}
+.option-rate {
+  font: 800 22px / 26px var(--font-display);
+  font-stretch: var(--stretch-display);
+  color: var(--text);
+}
+.fact-sub {
+  display: block;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.move {
+  position: relative;
+  border-top: 2px solid var(--rule);
+  border-bottom: 1px solid var(--line-strong);
+}
+.move ol {
+  display: flex;
+  flex-direction: column;
+}
+.move-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 14px 4px;
+}
+.move-row + .move-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--line);
+}
+/* the path between the two marks, with the direction on it */
+.move::before {
+  content: "";
+  position: absolute;
+  left: 21.25px;
+  top: 58px;
+  bottom: 58px;
+  border-left: 1.5px solid var(--text);
+}
+.move-arrow {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--text);
+  color: var(--text);
+}
+.move-side {
+  font: 500 13px / 18px var(--font-sans);
+  color: var(--text-muted);
+}
+.vault-rate {
+  font: 800 32px / 36px var(--font-display);
+  font-stretch: var(--stretch-display);
+  color: var(--text);
+}
+
+/* ---- adding money ---- */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  cursor: pointer;
+}
+.choice-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.choice.on {
+  border-color: var(--text);
+  box-shadow: inset 0 0 0 0.5px var(--text);
+}
+.choice:has(.choice-radio:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+.choice-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.choice-name {
+  font-weight: 600;
+}
+.choice-line {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+.choice-dot {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+}
+.choice.on .choice-dot {
+  border: 6px solid var(--text);
+}
+.code-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--panel);
+  box-shadow: var(--panel-ring);
+}
+.code-box .id {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+/* ---- paying: the camera ---- */
+.camera {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-height: 340px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--gray-900);
+  color: var(--gray-0);
+}
+.camera video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.camera-frame {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 56%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  fill: none;
+  stroke: var(--gray-0);
+  stroke-width: 4;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.camera-start {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  color: var(--gray-0);
+  cursor: pointer;
+}
+.camera-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ---- the split ---- */
+.plan {
+  display: flex;
+  flex-direction: column;
+}
+.sharebar {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  background: var(--bg-sunken);
+}
+.sharebar span {
+  min-width: 4px;
+}
+.swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-xs);
+  box-shadow: inset 0 0 0 1px oklch(17.5% 0.003 100 / 0.12);
+}
+.mix {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+.mix-ideas {
+  display: flex;
+  gap: 8px;
+}
+.mix-ideas .chip {
+  flex: 1 1 0;
+  padding: 0 8px;
+  font-size: 13px;
+}
+.mixbar {
+  position: relative;
+  height: 44px;
+  touch-action: none;
+  user-select: none;
+}
+.mixbar-track {
+  position: absolute;
+  inset: 16px 0 auto;
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  background: var(--bg-sunken);
+}
+.mixbar-seg {
+  flex-basis: 0;
+  min-width: 0;
+  transition: flex-grow 200ms var(--ease-out);
+}
+.mixbar.is-dragging .mixbar-seg {
+  transition: none;
+}
+.mixbar-rest {
+  background: repeating-linear-gradient(-45deg, var(--bg-sunken) 0 4px, var(--gray-100) 4px 8px);
+}
+.mixbar-handle {
+  position: absolute;
+  top: 0;
+  height: 44px;
+  width: 44px;
+  margin-left: -22px;
+  display: grid;
+  place-items: center;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.mixbar-knob {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-float);
+  transition: transform 150ms var(--ease-out);
+}
+.mixbar-handle:hover .mixbar-knob,
+.mixbar-handle.is-active .mixbar-knob {
+  transform: scale(1.15);
+  border-color: var(--text);
+}
+.mixbar-handle:focus-visible {
+  box-shadow: none;
+}
+.mixbar-handle:focus-visible .mixbar-knob {
+  box-shadow: var(--focus-ring);
+}
+.mix-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 8px 8px 16px;
+  border-radius: var(--radius-md);
+  background: var(--pending-soft);
+  color: oklch(40% 0.09 65);
+  font-weight: 600;
+}
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+.share-row + .share-row {
+  border-top: 1px solid var(--line);
+}
+.share-name {
+  font-weight: 600;
+}
+.share-amount {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+}
+.share-amount span {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.share-input {
+  width: 76px;
+  border: 0;
+  background: transparent;
+  text-align: right;
+  font: 600 16px / 24px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.share-amount:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+.share-input:focus-visible {
+  outline: 0;
+  box-shadow: none;
+}
+.remove-btn {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.remove-btn:hover {
+  background: var(--bg-sunken);
+}
+
+/* ---- review: who is paid, left aligned, the amount large ---- */
+.who {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 0 0;
+}
+.who-name {
+  font: 800 32px / 34px var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.who .t-hero {
+  margin-top: 14px;
+}
+.breakdown {
+  display: flex;
+  flex-direction: column;
+}
+.breakdown > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 12px 4px;
+}
+.breakdown dt {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+.breakdown-sub {
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.breakdown dd {
+  font: 700 19px / 24px var(--font-display);
+  font-stretch: var(--stretch-display);
+  font-variant-numeric: tabular-nums;
+}
+.ops {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+.ops li {
+  display: flex;
+  gap: 8px;
+}
+.ops li::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  height: 4px;
+  margin-top: 8px;
+  background: var(--text-muted);
+}
+
+/* ---- receipt: a paper slip whose top band says the status (T-044) ----
+   The band is the comprovante's printed header: carimbo blue when the Pix is paid, ink while it is on its way, grey when
+   the money came back, red when it failed. The word in it carries the status; the colour repeats it. */
+.slip {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.slip-band {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 14px 18px;
+  background: var(--text);
+  color: var(--gray-25);
+}
+.slip-band.paid {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.slip-band.back {
+  background: var(--gray-700);
+  color: var(--gray-25);
+}
+.slip-band.bad {
+  background: var(--danger);
+  color: var(--gray-0);
+}
+.slip-title {
+  font: 800 22px / 26px var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.005em;
+}
+.slip-band .vt-logo-mark {
+  color: currentColor;
+}
+.slip-band .band-end {
+  margin-left: auto;
+  font: 600 14px / 20px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.slip-band .op-spin {
+  border-color: oklch(100% 0 0 / 0.25);
+  border-top-color: currentColor;
+}
+.slip-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 18px 18px;
+}
+.slip-body .t-hero {
+  margin-bottom: 8px;
+}
+.slip-to {
+  font-size: 16px;
+}
+.tear {
+  margin: 16px -18px 10px;
+  border: 0;
+  border-top: 1.5px dashed var(--gray-300);
+}
+.live-line {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.receipt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+/* the steps, printed one per line with their times */
+.progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+.progress i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-xs);
+  box-shadow: inset 0 0 0 1.5px var(--gray-300);
+}
+.progress .done i {
+  background: var(--text);
+  box-shadow: none;
+}
+.progress .now {
+  color: var(--text);
+  font-weight: 600;
+}
+.progress .now i {
+  background: var(--pending);
+  box-shadow: none;
+}
+.progress .bad i {
+  background: var(--danger);
+  box-shadow: none;
+}
+.progress time {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.progress time::before {
+  content: "";
+  flex: 1;
+  min-width: 12px;
+  border-bottom: 1.5px dotted var(--gray-300);
+}
+/* The refresh button turns while the balance updates in the background (T-040). */
+.icon-btn.refresh[aria-busy="true"] svg {
+  animation: spin 0.9s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn.refresh[aria-busy="true"] svg {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- the success moment (T-035; T-044): the slip's band prints in from the left, its tick draws itself, and the words
+   follow in a short stagger. Transform, opacity and stroke only, about 0.6 s; nothing loops, glows or counts; with reduced
+   motion everything is simply there. ---- */
+.screen-success {
+  justify-content: center;
+  padding-bottom: 72px;
+}
+.celebrate .slip-band {
+  transform-origin: left center;
+  animation: print-in 460ms var(--ease-out) both;
+}
+.celebrate .slip-band > * {
+  animation: fade-in 240ms 240ms var(--ease-out) both;
+}
+.celebrate .slip-band .vt-logo-mark path {
+  stroke-dasharray: 1;
+  animation: check-draw 420ms 300ms cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+.celebrate .rise {
+  animation: rise-in 420ms var(--ease-out) both;
+  animation-delay: calc(260ms + var(--i, 0) * 60ms);
+}
+@keyframes print-in {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebrate .slip-band,
+  .celebrate .slip-band > *,
+  .celebrate .slip-band .vt-logo-mark path,
+  .celebrate .rise {
+    animation: none;
+  }
+}
+
+/* ---- account ---- */
+.me {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+/* ---- help ---- */
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item[open] .details-chevron {
+  transform: rotate(180deg);
+}
+.faq-item p {
+  padding: 0 16px 16px;
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+
+/* ---- motion: state only ---- */
+::view-transition-old(root) {
+  animation: 120ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 200ms var(--ease-out) both fade-in;
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.vt-btn[aria-busy="true"]::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vt-btn[aria-busy="true"]::after,
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  .mixbar-seg,
+  .mixbar-knob,
+  .details-chevron {
+    transition: none;
+  }
+}
+
+/* ---- destructive ---- */
+.danger-link {
+  color: var(--danger);
+}
+.vt-btn--danger {
+  background: var(--danger);
+  color: var(--gray-0);
+}
+
+/* ---- dividers and hovers last: the most specific selectors, after every base rule they refine ---- */
+/* On the ink slab the split's track and swatches lose their paper edges. */
+.slab .sharebar {
+  background: oklch(100% 0 0 / 0.12);
+}
+.slab .swatch {
+  box-shadow: none;
+}
+/* Inside a ledger a hairline runs the full width between rows (T-044). */
+:is(.rows, .facts, .breakdown, .panel:not(.row)) > * {
+  position: relative;
+}
+:is(.rows, .facts, .breakdown, .panel:not(.row)) > * + *::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--line);
+  pointer-events: none;
+}
+:is(a.row, a.offer, .row-btn):hover {
+  background: var(--bg-sunken);
+}
+:is(a.row, a.offer, .row-btn):active {
+  background: var(--gray-100);
+}

@@ -1,0 +1,22 @@
+{
+  "startedAt": "2026-10-23T00:37:44.695Z",
+  "publicBaseUrl": "https://<tunnel>.ngrok-free.dev",
+  "stellarToml": {
+    "WEB_AUTH_ENDPOINT": "https://<tunnel>.ngrok-free.dev/auth",
+    "SIGNING_KEY": "GCDHKT73WCJ5KZI5F6KK7ZM5GEO5YMUFYCZOPYCA4HWAR75HO5O26ZCJ"
+  },
+  "login": "SEP-10 challenge verified (server signature) and signed by the account; JWT issued",
+  "exit": {
+    "id": "ext_8f59f50328e7471c83cc",
+    "paymentId": "pay_82b68367461c434d94dd0d39",
+    "route": "classic",
+    "summary": [
+      "Pagar 0,5 USDC à Vants, trocando até 0,5754325 XLM"
+    ],
+    "txHash": "d9b65e1c5da3dff27154c18de2bc231e14a2d76a7c48ed44ffb52cab3f6c597d"
+  },
+  "signatures": 1,
+  "operations": 1,
+  "submitHttp": 202,
+  "paymentStatus": "completed"
+}

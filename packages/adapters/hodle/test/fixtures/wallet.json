@@ -1,0 +1,50 @@
+{
+  "source": "spike 2026-10-22T20-18-30-760Z-034-hodle-get-_api_wallet.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "GET",
+    "url": "/api/wallet?sync=true",
+    "body": null
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "success": true,
+      "data": {
+        "userId": "6ad8f60bcc50b04838d6fe86",
+        "subAccountId": null,
+        "addresses": {
+          "base": "0x429215123dF75FBcCD9f8ad184726c1A03D3153E",
+          "solana": "GqwQDnvxcZeVVgTjsqwNHDbdRmqhCjEEHcn43RBELUmF",
+          "liquid": "lq1qqfeaftk25set0h3c2el93h42emtzqhdpa5xq7xpprw7qatc8xv57n6uy0cs4wswl2xualx0r6knwywc06lcd55u43v709znfh",
+          "base-sepolia": "0xDF93D84684bb70f70073e3Ab7B85aeAC81bCC7C8"
+        },
+        "balances": [
+          {
+            "network": "base",
+            "asset": "USDC",
+            "amount": "0.00"
+          },
+          {
+            "network": "base",
+            "asset": "BRLA",
+            "amount": "0.00"
+          },
+          {
+            "network": "base-sepolia",
+            "asset": "BRLH",
+            "amount": "0.00"
+          },
+          {
+            "network": "base-sepolia",
+            "asset": "USDH",
+            "amount": "24.444449"
+          }
+        ],
+        "syncedAt": "2026-10-22T20:18:30.518Z"
+      }
+    }
+  }
+}

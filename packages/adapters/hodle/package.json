@@ -1,0 +1,12 @@
+{
+  "name": "@vants/adapter-hodle",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./webhook": "./src/webhook.ts"
+  },
+  "dependencies": {
+    "@vants/domain": "workspace:*"
+  }
+}

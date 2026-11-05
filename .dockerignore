@@ -1,0 +1,15 @@
+**/node_modules
+.git
+.env
+.env.*
+!.env.example
+apps/web/dist
+contracts/*/target
+contracts/*/test_snapshots
+docs
+logs
+results
+data
+fixtures
+coverage
+*.tsbuildinfo
