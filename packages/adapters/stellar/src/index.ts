@@ -13,6 +13,7 @@ export {
   refundMemo,
   refundRetryDecision,
   sacIdOf,
+  sacMatchesAsset,
   submitAndWait,
   type TreasuryBalance,
   type TxLookup,

@@ -9,10 +9,30 @@ import {
   refundMemo,
   refundRetryDecision,
   sacIdOf,
+  sacMatchesAsset,
 } from "./treasury.ts";
 
 const treasury = Keypair.random();
 const CIRCLE_USDC = "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
+
+describe("sacMatchesAsset (T-047)", () => {
+  const circleSac = sacIdOf(classicAsset(CIRCLE_USDC));
+
+  it("accepts an asset's own contract, native included", () => {
+    expect(sacMatchesAsset(circleSac, CIRCLE_USDC)).toBe(true);
+    expect(sacMatchesAsset(sacIdOf(classicAsset("native")), "native")).toBe(true);
+  });
+
+  it("refuses a contract naming an asset that isn't its own", () => {
+    expect(sacMatchesAsset(StrKey.encodeContract(Buffer.alloc(32, 7)), CIRCLE_USDC)).toBe(false);
+    expect(sacMatchesAsset(circleSac, "native")).toBe(false);
+  });
+
+  it("refuses a name that isn't an asset, without throwing", () => {
+    expect(sacMatchesAsset(circleSac, "garbage")).toBe(false);
+    expect(sacMatchesAsset(circleSac, "")).toBe(false);
+  });
+});
 
 describe("depositInstructions (DEC-004)", () => {
   it("gives an M… address that decodes back to the treasury and the payment's id, plus the memo fallback", () => {

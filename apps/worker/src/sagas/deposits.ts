@@ -2,6 +2,7 @@
 // muxed id (DEC-004) and fed to the state machine, which classifies it (exact, over, under, late, wrong asset,
 // unexpected). Runs in the inbox transaction, so the deposit, the payment and its events commit together (INV-04).
 import { type PierEnvelope, parseTransfer } from "@vants/adapter-pier";
+import { sacMatchesAsset } from "@vants/adapter-stellar";
 import { type DepositRow, getPaymentByMuxId, type InboxRecord, insertDeposit, savePayment, type Tx } from "@vants/db";
 import { decide } from "@vants/domain";
 import type { SagaDeps } from "./ports.ts";
@@ -11,6 +12,11 @@ export async function onPierRecord(tx: Tx, record: InboxRecord, deps: SagaDeps):
   const t = parseTransfer(event);
   // Only transfers into the treasury are deposits; our own refunds show up as transfers out of it.
   if (!t || t.to !== deps.treasury || t.from === deps.treasury) return;
+  // Any contract can emit a "transfer" naming any asset: only the asset's own contract moves it (T-047, DEC-064).
+  if (!sacMatchesAsset(t.asset, t.assetName)) {
+    console.warn(`[deposits] ignored event ${t.eventId}: contract ${t.asset} is not the asset contract it names`);
+    return;
+  }
 
   const row: Omit<DepositRow, "paymentId" | "kind"> = {
     id: t.eventId,

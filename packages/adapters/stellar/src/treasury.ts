@@ -52,6 +52,18 @@ export function classicAsset(name: string): Asset {
 export const sacIdOf = (asset: Asset): string => asset.contractId(Networks.TESTNET);
 
 /**
+ * Is `contractId` the asset contract of the asset `assetName` names? Any contract can emit a "transfer" event naming any
+ * asset, so an event's own claim counts only when this holds (T-047). A name that isn't an asset is simply not a match.
+ */
+export function sacMatchesAsset(contractId: string, assetName: string): boolean {
+  try {
+    return sacIdOf(classicAsset(assetName)) === contractId;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Text memo on every refund: "vants:rf:<mux id in base 36>:<tag>", at most 28 bytes for any u64 id and a tag of up to 5
  * characters. The tag is the refund's number for a payment ("1"), or "u<n>" for a deposit no payment owns (T-011).
  */

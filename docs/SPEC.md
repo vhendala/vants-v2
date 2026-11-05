@@ -534,6 +534,7 @@ Phase gates: **G-A** after T-005 (rail backbone, recorded fixtures), **G-B** aft
 | T-033 | Atividade shows every movement | T-032 | §5.3, DEC-051 | done | The human (2026-11-02): "the activity is only listing offramps and forgeting about investments and other kinds of activities". One feed: Pix payments, investing/redeeming, Tesouro trades, accepting an asset, Pix deposits; newest first, by day, one cursor; unsigned actions left out; submitted actions settled from the network; integration test on Postgres; contrast gate on Atividade |
 | T-034 | Money math audit and fixes | T-033 | §3.7, §5.3, DEC-052 | done | The human (2026-11-02): "lets double check all the math around the system. Calculation about values everywhere ... double check all the infos and if they are correct". Two independent audits (backend; app) with every finding confirmed by a numeric example; confirmed bugs fixed with tests; the books-alarm rule is a §11 question (Q15) |
 | T-035 | The success moment and where each flow ends | T-034 | §5.3, DEC-053 | done | The human (2026-11-02): "lets work a little bit on the wow moment. when someone invest, pay or get to the end of a flow on the app. i want motion, elegant but pretty. also check where it redirects after, it needs to make sense". One signature success moment at the end of paying, investing, redeeming, Tesouro and adding money, only when completion happens on screen; reduced motion shows the end state; each end leads somewhere that makes sense; contrast gate covers the success states |
+| T-047 | Only an asset's own contract makes a deposit | T-011 | §3.4, §3.6, INV-01, INV-10, DEC-064 | review | From the review of PR #1. A `transfer` event whose contract is not the SAC of the asset it names (or whose name is not an asset) changes nothing: no deposit, no refund, no capital booked, no payment state change, no retry; real transfers behave as before |
 | T-090 | PoC evidence run | T-012, T-016, T-021 | §1 | todo | D1–D7 recorded with timings, tx hashes and logs; §2 claims updated |
 
 ## §10 Decision log
@@ -1907,6 +1908,12 @@ Context: the adapter used three things from the SDK: list and create subscriptio
 Decision: `PierGateway` calls `/v1/subscriptions` and `/v1/subscriptions/:id/events` directly with `x-api-key`; `verifyPierWebhook` uses `standardwebhooks`. Supersedes the second Stellar SDK accepted in DEC-015.
 Alternatives: keeping the SDK; replacing Pier itself (a larger change, still open).
 Consequences: one Stellar SDK in the lockfile. The hosted Pier service is still needed, with its address and key in the environment.
+
+### DEC-064: A deposit needs the named asset's own contract (2026-11-05, T-047)
+Context: `parseTransfer` takes the asset's name from the event's topic. Any contract can emit a `transfer` naming real USDC, and an unknown muxed id or a wrong-asset match then refunded real USDC from the treasury. Whether Pier's `payment` filter lets such events through is not known (its source is not in this repository), so the check does not rely on it.
+Decision: the deposit matcher ignores, with a log line, an event whose `contractId` is not the SAC of the asset it names (`sacMatchesAsset` in `@vants/adapter-stellar`). The check is in the worker because adapters never import each other (§3.8).
+Alternatives: filtering in `parseTransfer` (the Pier adapter can't import the Stellar one); an allowlist of funding assets (would stop refunding real wrong-asset deposits, which D5 requires).
+Consequences: strengthens INV-01 and INV-10. The event stays in the inbox as received and processed, with no other record.
 
 ## §11 Open questions
 

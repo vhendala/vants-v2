@@ -31,7 +31,7 @@ import {
   USDH,
 } from "@vants/domain";
 import { buildStaticBrCode } from "@vants/pix";
-import { Keypair } from "@stellar/stellar-sdk";
+import { Keypair, StrKey } from "@stellar/stellar-sdk";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { startPostgres, type TestPostgres } from "../../../../packages/db/test/postgres.ts";
 import { FakeCctp, FakeFloat, FakeHodle, FakeLedger, transferEnvelope } from "../../test/fakes.ts";
@@ -153,13 +153,15 @@ async function deposit(t: {
   from?: string;
   to?: string;
   at?: Date;
+  /** The contract that emitted the event; a real transfer's is the named asset's SAC. */
+  sac?: string;
 }) {
   const assetName = t.assetName ?? CIRCLE;
   const event = transferEnvelope({
     from: t.from ?? payer,
     to: t.to ?? treasury,
     assetName,
-    sac: sacIdOf(classicAsset(assetName)),
+    sac: t.sac ?? sacIdOf(classicAsset(assetName)),
     amount7: t.amount7,
     ...(t.muxId ? { muxId: t.muxId } : {}),
     ledgerClosedAt: (t.at ?? clock).toISOString(),
@@ -470,6 +472,42 @@ describe("bad deposits are refunded, tagged with the payment (D5, INV-10, INV-11
     expect(ledger.payments).toEqual([]);
     const kinds = await bb.pool.query("SELECT kind FROM deposits ORDER BY created_at DESC LIMIT 1");
     expect(kinds.rows[0]?.kind).toBe("unmarked");
+  });
+});
+
+describe("transfer events from a contract that isn't the named asset's SAC (T-047)", () => {
+  const OTHER_CONTRACT = StrKey.encodeContract(Buffer.alloc(32, 7));
+  const depositRows = async (from: string) =>
+    (await bb.pool.query("SELECT id FROM deposits WHERE from_account = $1", [from])).rows;
+
+  it("an unknown muxed id: no deposit, no refund", async () => {
+    const attacker = Keypair.random().publicKey();
+    await deposit({ muxId: "900000001", amount7: 50_000_000n, from: attacker, sac: OTHER_CONTRACT });
+    await settleAll();
+    expect(await depositRows(attacker)).toEqual([]);
+    expect(ledger.payments).toEqual([]);
+  });
+
+  it("a live payment's muxed id: the payment stays awaiting its deposit, nothing is refunded", async () => {
+    const attacker = Keypair.random().publicKey();
+    const p = await createPayment();
+    await deposit({ muxId: p.muxId, amount7: 50_000_000n, from: attacker, sac: OTHER_CONTRACT });
+    await settleAll();
+    expect((await load(p.id)).status).toBe("awaiting_deposit");
+    expect(await depositRows(attacker)).toEqual([]);
+    expect(ledger.payments).toEqual([]);
+  });
+
+  it("no muxed id: nothing is booked to capital", async () => {
+    const attacker = Keypair.random().publicKey();
+    await deposit({ amount7: 50_000_000n, from: attacker, sac: OTHER_CONTRACT });
+    expect(await depositRows(attacker)).toEqual([]);
+  });
+
+  it("an asset name that isn't one: ignored, not thrown (the job would retry forever)", async () => {
+    const attacker = Keypair.random().publicKey();
+    await deposit({ muxId: "900000002", amount7: 1n, from: attacker, assetName: "garbage", sac: OTHER_CONTRACT });
+    expect(await depositRows(attacker)).toEqual([]);
   });
 });
 
