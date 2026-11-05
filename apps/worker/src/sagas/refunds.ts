@@ -28,6 +28,9 @@ export class RefundPending extends Error {
   }
 }
 
+/** The refund's own data can't make an envelope (e.g. a contract as the destination): retrying can't help. */
+class RefundUnbuildable extends Error {}
+
 interface RefundRequestedPayload {
   refundId: string;
   asset: string;
@@ -104,16 +107,22 @@ async function settleRefund(r: RefundRow, deps: RefundDeps): Promise<boolean> {
           r.envelopeXdr && r.txHash && r.maxTime !== null
             ? { xdr: r.envelopeXdr, hash: r.txHash, maxTime: r.maxTime }
             : null,
-        build: async () =>
-          buildRefundTx({
-            source: await deps.ledger.account(),
-            signer: deps.signer,
-            to: r.toAccount,
-            asset: classicAsset(r.assetName),
-            amount7: r.amount7,
-            memo: r.memo,
-            nowSeconds: nowSeconds(deps),
-          }),
+        build: async () => {
+          const source = await deps.ledger.account(); // outside the try: a network error here is retried
+          try {
+            return buildRefundTx({
+              source,
+              signer: deps.signer,
+              to: r.toAccount,
+              asset: classicAsset(r.assetName),
+              amount7: r.amount7,
+              memo: r.memo,
+              nowSeconds: nowSeconds(deps),
+            });
+          } catch (err) {
+            throw new RefundUnbuildable(err instanceof Error ? err.message : String(err));
+          }
+        },
         persist: (built) => deps.backbone.withTransaction((tx) => recordRefundEnvelope(tx, r.id, built)),
         ledger: deps.ledger,
         nowSeconds: nowSeconds(deps),
@@ -122,6 +131,7 @@ async function settleRefund(r: RefundRow, deps: RefundDeps): Promise<boolean> {
     return landed === "success" ? markSent(r, hash, deps) : markFailed(r, hash, deps);
   } catch (err) {
     if (err instanceof EnvelopePending) throw new RefundPending(`refund ${r.id}: ${err.message}`);
+    if (err instanceof RefundUnbuildable) return setAside(r, err.message, deps);
     throw err;
   }
 }
@@ -167,6 +177,14 @@ async function markSent(r: RefundRow, hash: string, deps: RefundDeps): Promise<b
     ]);
   });
   return true;
+}
+
+/** No envelope can be built, so nothing was sent and no fee paid. Set aside for review; the queue moves on (DEC-065). */
+async function setAside(r: RefundRow, problem: string, deps: RefundDeps): Promise<boolean> {
+  const reason = `no envelope can be built: ${problem}`;
+  console.error(`[refund] ${r.id} needs review: ${reason}`);
+  await deps.backbone.withTransaction((tx) => setRefundStatus(tx, r.id, "failed", reason));
+  return false;
 }
 
 /** The envelope landed but failed (e.g. no trustline): retrying can't help. Set aside for review; the queue moves on. */

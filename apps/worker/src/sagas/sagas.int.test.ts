@@ -598,6 +598,55 @@ describe("refunds land at most once (INV-10)", () => {
     expect((await load(a.id)).status).toBe("refunding");
     expect((await load(b.id)).status).toBe("refunded");
   });
+
+  describe("a refund that can't be built (T-048)", () => {
+    const CONTRACT_SENDER = StrKey.encodeContract(Buffer.alloc(32, 9));
+    const refundOf = async (id: string) =>
+      (
+        await bb.pool.query<{ status: string; envelope_xdr: string | null }>(
+          "SELECT status, envelope_xdr FROM refunds WHERE payment_id = $1",
+          [id],
+        )
+      ).rows[0];
+
+    it("a sender that is a contract: set aside for review, and the queue moves on", async () => {
+      const a = await createPayment();
+      const b = await createPayment();
+      await deposit({ muxId: a.muxId, amount7: 1n, from: CONTRACT_SENDER });
+      await deposit({ muxId: b.muxId, amount7: 2n });
+      await dispatch();
+      await runRefundPump(deps());
+      expect(await refundOf(a.id)).toEqual({ status: "failed", envelope_xdr: null });
+      expect((await refundOf(b.id))?.status).toBe("sent");
+      expect(ledger.payments.map((x) => x.amount)).toEqual(["0.0000002"]);
+      expect((await load(a.id)).status).toBe("refunding");
+      expect((await load(b.id)).status).toBe("refunded");
+    });
+
+    it("an unattributed deposit from a contract: same", async () => {
+      const b = await createPayment();
+      await deposit({ muxId: "900000003", amount7: 1n, from: CONTRACT_SENDER });
+      await deposit({ muxId: b.muxId, amount7: 2n });
+      await dispatch();
+      await runRefundPump(deps());
+      const row = await bb.pool.query<{ status: string }>("SELECT status FROM refunds WHERE mux_id = '900000003'");
+      expect(row.rows[0]?.status).toBe("failed");
+      expect((await refundOf(b.id))?.status).toBe("sent");
+    });
+
+    it("a network error while building is still retried, not set aside", async () => {
+      const a = await createPayment();
+      await deposit({ muxId: a.muxId, amount7: 1n });
+      await dispatch();
+      const account = ledger.account.bind(ledger);
+      ledger.account = () => Promise.reject(new Error("network error"));
+      await expect(runRefundPump(deps())).rejects.toThrow(/network error/);
+      expect((await refundOf(a.id))?.status).toBe("requested");
+      ledger.account = account;
+      await runRefundPump(deps());
+      expect((await refundOf(a.id))?.status).toBe("sent");
+    });
+  });
 });
 
 describe("the sweep (INV-03)", () => {
