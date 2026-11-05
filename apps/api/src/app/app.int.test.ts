@@ -259,6 +259,12 @@ describe("/app (JWT)", () => {
     expect((await app.inject({ method: "GET", url: "/app/portfolio", headers: authed("x.y.z") })).statusCode).toBe(401);
   });
 
+  it("refuses them on a percent-encoded path too (T-049)", async () => {
+    for (const url of ["/%61pp/portfolio", "/app/%70ortfolio", "/%61%70%70/limits"]) {
+      expect((await app.inject({ method: "GET", url })).statusCode, url).toBe(401);
+    }
+  });
+
   it("shows the account's portfolio and prices a BR Code before anything is picked", async () => {
     const t = await login(user);
     const p = await app.inject({ method: "GET", url: "/app/portfolio", headers: authed(t) });

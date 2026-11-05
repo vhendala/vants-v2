@@ -536,6 +536,9 @@ Phase gates: **G-A** after T-005 (rail backbone, recorded fixtures), **G-B** aft
 | T-035 | The success moment and where each flow ends | T-034 | §5.3, DEC-053 | done | The human (2026-11-02): "lets work a little bit on the wow moment. when someone invest, pay or get to the end of a flow on the app. i want motion, elegant but pretty. also check where it redirects after, it needs to make sense". One signature success moment at the end of paying, investing, redeeming, Tesouro and adding money, only when completion happens on screen; reduced motion shows the end state; each end leads somewhere that makes sense; contrast gate covers the success states |
 | T-047 | Only an asset's own contract makes a deposit | T-011 | §3.4, §3.6, INV-01, INV-10, DEC-064 | review | From the review of PR #1. A `transfer` event whose contract is not the SAC of the asset it names (or whose name is not an asset) changes nothing: no deposit, no refund, no capital booked, no payment state change, no retry; real transfers behave as before |
 | T-048 | A refund that can't be built doesn't stop the queue | T-047 | §3.4, INV-03, INV-10, DEC-065 | review | From the review of PR #1. A refund whose data can't make an envelope (a contract as the destination, a bad asset or amount) is set aside as `failed` for review, with its reason, and later refunds still go out; a network error while building is still retried. How to return money to a contract sender is §11 Q16 |
+| T-049 | `/app/*` login check on the matched route | T-048 | §5.3, DEC-066 | review | From the review of PR #1. A percent-encoded path such as `/%61pp/portfolio` gets 401 without a token, as `/app/portfolio` does (it got 200 with an empty account); routes outside `/app/` are unchanged |
+| T-050 | Repair SPEC §2 and §9 | — | §2, §9 | todo | The rows of T-037 to T-046 sit inside the §2 claims table (lines 63–73), the "Pays Pix" claim lost its evidence and status, and T-036 has no row of its own: restored from history or asked of the human; README status line current |
+| T-051 | Remaining findings from the review of PR #1 | T-048 | §3.4, INV-03, INV-07, INV-10 | todo | Each confirmed with a failing test or dismissed: a rebuild decided on the local clock can double-refund if the RPC lags (`treasury-tx.ts`); `TRY_AGAIN_LATER` recorded as submitted (`routes.ts`, `money.ts`); a `PAYOUT_SUCCESSFUL` without `quote.assetAmount` books a zero debit (`hodle-events.ts`); a mainnet RPC URL passes config, and `api` never calls `assertTestnet` |
 | T-090 | PoC evidence run | T-012, T-016, T-021 | §1 | todo | D1–D7 recorded with timings, tx hashes and logs; §2 claims updated |
 
 ## §10 Decision log
@@ -1921,6 +1924,12 @@ Context: `Operation.payment` in stellar-sdk 17.3.0 throws "destination is invali
 Decision: an error from building the envelope (not from fetching the account) sets the refund to `failed` with its reason, the same review path as an envelope that fails on the ledger; `needsReview` counts it. Nothing is sent.
 Alternatives: refunding a contract with a SAC `transfer` (a Soroban transaction can't carry the memo INV-10 requires, so that is the human's call, §11 Q16); skipping the row without a status (it would be retried on every pass).
 Consequences: the queue keeps moving. The money stays in the treasury and the payment stays `refunding` until someone acts, as for a refund that failed on the ledger, so INV-03 is not met for these payments (§11 Q16).
+
+### DEC-066: The `/app/*` hook reads the matched route (2026-11-05, T-049)
+Context: the hook tested `req.url`, the raw URL, while the router decodes the path. `/%61pp/portfolio` reached the handler with no token and an empty account (reproduced on the real app, 200). No other account's data was reachable, but the float limit was, and `/%61pp/ramp/profile` could reach Etherfuse.
+Decision: test `req.routeOptions.url` (Fastify 5.12.7), the route that was matched.
+Alternatives: moving `/app/*` into its own Fastify plugin with a prefix, so the hook applies by construction (cleaner, but a larger move for a one-line fix); rejecting percent-encoded paths (would refuse legitimate encoded parameters).
+Consequences: the `/v0` hook is not affected, since it lives in its own plugin and fails closed. An unknown `/app/` path still answers 404 without a token, as before.
 
 ## §11 Open questions
 

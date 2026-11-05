@@ -253,7 +253,8 @@ export const appRoutes: FastifyPluginAsync<AppOptions> = async (app, opts) => {
 
   // --- /app ------------------------------------------------------------------------------------------------------------
   app.addHook("onRequest", async (req, reply) => {
-    if (!req.url.startsWith("/app/")) return;
+    // The matched route, not the raw URL: the router decodes the path, so "/%61pp/limits" also lands on "/app/limits".
+    if (!req.routeOptions.url?.startsWith("/app/")) return;
     const auth = req.headers.authorization ?? "";
     const claims = auth.startsWith("Bearer ")
       ? verifyJwt(auth.slice(7), webAuth.jwtSecret, { iss: issuer, nowSeconds: now() })

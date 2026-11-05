@@ -281,6 +281,11 @@ describe("adding money by Pix (Etherfuse sandbox)", () => {
     address: { street: "Av. Paulista, 1000", city: "São Paulo", region: "SP", postalCode: "01310-100" },
   };
 
+  it("refuses the profile on a percent-encoded path without a token: nothing reaches Etherfuse (T-049)", async () => {
+    const res = await app.inject({ method: "POST", url: "/%61pp/ramp/profile", payload: profile });
+    expect(res.statusCode).toBe(401);
+  });
+
   it("asks who the person is once, then quotes, needs the wallet to accept the asset, and places the order", async () => {
     const h = await login(user);
     expect((await app.inject({ method: "GET", url: "/app/ramp", headers: h })).json()).toMatchObject({
