@@ -1,0 +1,54 @@
+{
+  "source": "https://docs.hodle.com.br/docs/webhooks (documented examples, read 2026-10-22); PAYOUT_SUCCESSFUL adapted to the sandbox USDH payout recorded in payout-completed.json",
+  "PAYOUT_SUCCESSFUL": {
+    "event": "PAYOUT_SUCCESSFUL",
+    "data": {
+      "success": true,
+      "transactionId": "6ada6a513d373872025e1cdf",
+      "externalId": "vants:pay_1",
+      "trackId": "e38afb8e-7472-4100-9c69-dd619dda9b96",
+      "status": "COMPLETED",
+      "asset": "USDH",
+      "network": "base-sepolia",
+      "valueInBrl": "12.34",
+      "fee": "0.00",
+      "pixKey": "pix-spike@vants.example.com",
+      "endToEndId": "SANDBOX5BAA9F4CCA844630AB7EC7300",
+      "txHash": "0xccc48d16078d8d95bf1761d57c2047d41f2da463490ab22252f60af0aa44dbed",
+      "receipt": null,
+      "receiptUrl": null,
+      "quote": { "brlAmount": "12.34", "assetAmount": "2.285185", "fxRateAtTx": 5.4 },
+      "invoice": "0xccc48d16078d8d95bf1761d57c2047d41f2da463490ab22252f60af0aa44dbed"
+    }
+  },
+  "PAYOUT_FAILED": {
+    "event": "PAYOUT_FAILED",
+    "data": {
+      "success": false,
+      "invoice": "0xeafe9c4985963a7a7d6e49f763cca5c6006693031402d46c0da2fced4519fe03",
+      "pixKey": "user@email.com",
+      "valueInBrl": "10.00",
+      "errorCode": "PAYOUT_FAILED",
+      "errorDescription": "Não foi possível processar o pagamento no momento. Tente novamente mais tarde."
+    }
+  },
+  "DEPOSIT_ASSET_SUCCESS": {
+    "event": "DEPOSIT_ASSET_SUCCESS",
+    "data": {
+      "eventId": "deposit-completed-66f0c1e2a4b5c6d7e8f90123",
+      "occurredAt": "2026-09-22T23:52:40.000Z",
+      "success": true,
+      "externalId": "my-order-123",
+      "walletCharge": "66f0c1e2a4b5c6d7e8f90123",
+      "trackId": "trk_abc123",
+      "asset": "USDH",
+      "network": "base-sepolia",
+      "value": 5000,
+      "valueInBrl": "50.00",
+      "valueInCurrency": 9.25,
+      "fee": "0.00",
+      "fxRateAtTx": 5.4
+    }
+  },
+  "WEBHOOK_TEST": { "event": "WEBHOOK_TEST", "data": {} }
+}

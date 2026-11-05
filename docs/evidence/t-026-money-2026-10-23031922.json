@@ -1,0 +1,64 @@
+{
+  "startedAt": "2026-10-23T03:19:22.994Z",
+  "account": "GDGCA32XZTV7OW5PSLRPWTBMZC44EPZZB5LLCD6SSBEUYDE2QBZXDKYY",
+  "invest": {
+    "offer": [
+      {
+        "name": "Dólar que rende",
+        "apyPercent": 13.91
+      },
+      {
+        "name": "Lumens que rendem",
+        "apyPercent": 7.29
+      }
+    ],
+    "deposit": {
+      "id": "act_9c19549000b640348de7",
+      "txHash": "0eaf0476c3f3795aef4dcf8d0299b044266e47b0e94645b6976ea5b582727d2f",
+      "summary": [
+        "Investir 10 lumens em Lumens que rendem",
+        "O rendimento começa na hora"
+      ],
+      "seconds": 7.331
+    },
+    "investedAfterDeposit": "10",
+    "redeem": {
+      "id": "act_5fc04e2f8b1b477d95d7",
+      "txHash": "32349e388801cbed3ef49d51b23a0c89b54c0413e35f8f25adefc5c72c3afb1a",
+      "summary": [
+        "Resgatar 4 lumens de Lumens que rendem",
+        "O valor volta para o seu saldo"
+      ],
+      "seconds": 2.078
+    },
+    "investedAfterRedeem": "6"
+  },
+  "ramp": {
+    "quote": {
+      "receive": "9.8764943",
+      "feeBrl": "0.10",
+      "needsTrustline": false
+    },
+    "trustline": {
+      "id": "act_d8b4dc09790e42259860",
+      "txHash": "008c5be1c737a33cd4a45bcef688732cfd1a11b228777bb49418dc85381de659",
+      "summary": [
+        "Permitir que sua carteira receba dólar digital",
+        "Uma vez só: meio lumen fica reservado na carteira"
+      ],
+      "seconds": 5.497
+    },
+    "order": {
+      "id": "be075ac2-e834-42c9-9607-565bd2cf6dfb",
+      "pixCode": false,
+      "statuses": [
+        {
+          "at": "2026-10-23T03:19:55.548Z",
+          "status": "funded"
+        }
+      ],
+      "deliveredTx": null
+    }
+  },
+  "finishedAt": "2026-10-23T03:24:23.884Z"
+}

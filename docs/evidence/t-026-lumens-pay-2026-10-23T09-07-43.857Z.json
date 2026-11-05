@@ -1,0 +1,22 @@
+{
+  "startedAt": "2026-10-23T09:07:43.857Z",
+  "account": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+  "deposit": null,
+  "exit": {
+    "id": "ext_c12e5daea3c544bf8a73",
+    "paymentId": "pay_f15ba8348def42759720abf1",
+    "route": "router",
+    "asset": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    "summary": [
+      "Resgatar 9,4582907 lumens de Lumens que rendem",
+      "Trocar até 9,4582907 lumens por 1 dólar digital",
+      "Pagar 1 dólar digital à Vants"
+    ],
+    "txHash": "c05649d49562750cf378185b362ea7a73cfadf7d2dbd9c501b2d377c07d1648a"
+  },
+  "signatures": 1,
+  "operations": 1,
+  "paymentStatus": "completed",
+  "endToEndId": "SANDBOX655E06E70C2F4ABCA7FF2C799",
+  "secondsAfterSigning": 9.757
+}

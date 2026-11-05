@@ -1,0 +1,6 @@
+{
+  "name": "@vants/adapter-etherfuse",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts"
+}

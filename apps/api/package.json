@@ -1,0 +1,25 @@
+{
+  "name": "@vants/api",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0",
+    "@vants/adapter-defindex": "workspace:*",
+    "@vants/adapter-etherfuse": "workspace:*",
+    "@vants/adapter-hodle": "workspace:*",
+    "@vants/adapter-pier": "workspace:*",
+    "@vants/adapter-stellar": "workspace:*",
+    "@vants/config": "workspace:*",
+    "@vants/db": "workspace:*",
+    "@vants/domain": "workspace:*",
+    "@vants/pix": "workspace:*",
+    "fastify": "5.12.7",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "standardwebhooks": "1.1.1",
+    "pg": "8.23.1",
+    "@types/pg": "8.23.1"
+  }
+}

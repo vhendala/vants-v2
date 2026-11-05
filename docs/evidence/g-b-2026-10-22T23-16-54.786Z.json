@@ -1,0 +1,159 @@
+{
+  "startedAt": "2026-10-22T23:16:54.786Z",
+  "network": "testnet",
+  "hodle": "sandbox",
+  "D1": {
+    "paymentId": "pay_e318334707684efda712d186",
+    "depositTx": "a3203bf9630b8cd6ed9a8d9ac8dad167fe2ec424232f8f8ee007920b8e33de85",
+    "depositLedgerClosedAt": "2026-10-22T23:16:57.000Z",
+    "payoutCompletedAt": "2026-10-22T23:17:05.943Z",
+    "webhookReceivedAt": "2026-10-22T23:17:09.501Z",
+    "secondsDepositToPayout": 8.9,
+    "secondsDepositToWebhook": 12.5,
+    "hodleEndToEndId": "SANDBOX1E56E8419D434D60B728D28A0",
+    "webhooks": [
+      {
+        "id": "pay_e318334707684efda712d186:0",
+        "status": "awaiting_deposit",
+        "verified": true
+      },
+      {
+        "id": "pay_e318334707684efda712d186:1",
+        "status": "funded",
+        "verified": true
+      },
+      {
+        "id": "pay_e318334707684efda712d186:2",
+        "status": "completed",
+        "verified": true
+      },
+      {
+        "id": "pay_e318334707684efda712d186:3",
+        "status": "completed",
+        "verified": true
+      }
+    ]
+  },
+  "D5": {
+    "underpaid": {
+      "paymentId": "pay_8652fc0d0a774506b546cd27",
+      "depositTx": "d59f1530500fc31672ba6fca383e4da6d4cf315b25d9cc84b8f55e7f51c3f035",
+      "depositLedgerClosedAt": "2026-10-22T23:17:12.000Z",
+      "refundTx": "a05205f36a6cf59ad82fb3a3f884e25ecf8a483217d9c71ea1990f689545c660",
+      "refundLedgerClosedAt": "2026-10-22T23:17:22.000Z",
+      "secondsDepositToRefund": 10,
+      "memo": "vants:rf:s6:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.2500000",
+      "refundAsset": "USDC",
+      "refundedWebhookVerified": true
+    },
+    "unknownMuxedId": {
+      "depositTx": "38856a89ea00064e5d2f14b63319a87e05af93574778bb8d77bb4984656af222",
+      "depositLedgerClosedAt": "2026-10-22T23:17:27.000Z",
+      "refundTx": "63b448d27f1e176fd0059d52c67e31975247d7209b1a2baf7c26a1df78ff4ad2",
+      "refundLedgerClosedAt": "2026-10-22T23:17:37.000Z",
+      "secondsDepositToRefund": 10,
+      "memo": "vants:rf:46d0rto:u1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.1000000",
+      "refundAsset": "USDC"
+    },
+    "wrongAsset": {
+      "paymentId": "pay_51b26bad126549d1b63e94c7",
+      "depositTx": "bd19b508a10e60b7eb4ef3d2ee697d56632bcf1a0f464959ca35850f289e1342",
+      "depositLedgerClosedAt": "2026-10-22T23:17:42.000Z",
+      "refundTx": "4711e283252bdd447b21501d9677f58faa9b5fd24d6ff4ead832152aff397d26",
+      "refundLedgerClosedAt": "2026-10-22T23:17:52.000Z",
+      "secondsDepositToRefund": 10,
+      "memo": "vants:rf:s7:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "1.0000000",
+      "refundAsset": "native",
+      "refundedWebhookVerified": true
+    },
+    "late": {
+      "paymentId": "pay_eed7596cbf5b497db30c5152",
+      "depositTx": "e6a604d19b271599b45fbbb7bd449a048753454fa8a68e87a467622c2e593419",
+      "depositLedgerClosedAt": "2026-10-22T23:19:02.000Z",
+      "refundTx": "1e2872896f71cbcf683c73f78d65f8699515f99b31b4f6327835432cfd5204df",
+      "refundLedgerClosedAt": "2026-10-22T23:19:12.000Z",
+      "secondsDepositToRefund": 10,
+      "memo": "vants:rf:s4:1",
+      "refundedTo": "GCLFUKIR3AW6NIRV7VEAYGO527YRONFEWL5V4HJBTOQRQ6R64U6UOYTT",
+      "refundAmount": "0.5000000",
+      "refundAsset": "USDC",
+      "refundedWebhookVerified": true
+    }
+  },
+  "D4": {
+    "pier": {
+      "simulated": false,
+      "replayStatuses": [
+        200,
+        200
+      ],
+      "forgedStatuses": [
+        401,
+        401
+      ],
+      "paymentBefore": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "21",
+        "notes": "4"
+      },
+      "paymentAfter": {
+        "version": 3,
+        "status": "completed",
+        "attempts": 1,
+        "inbox": "21",
+        "notes": "4"
+      }
+    }
+  },
+  "finishedAt": "2026-10-22T23:19:24.051Z",
+  "checks": [
+    {
+      "check": "D1 payout completed and the signed payment.updated webhook says completed",
+      "ok": true,
+      "detail": "pay_e318334707684efda712d186"
+    },
+    {
+      "check": "D1 webhooks are all signed and verify",
+      "ok": true,
+      "detail": "4 received"
+    },
+    {
+      "check": "D5 underpaid (0.25 of 0.5 USDC): refunded to the sender within 60 s, tagged vants:rf:s6:1",
+      "ok": true,
+      "detail": "10 s"
+    },
+    {
+      "check": "D5 unknown muxed id 9091797468 (0.1 USDC): refunded to the sender within 60 s, tagged vants:rf:46d0rto:u1",
+      "ok": true,
+      "detail": "10 s"
+    },
+    {
+      "check": "D5 wrong asset (1 XLM to a USDC payment): refunded to the sender within 60 s, tagged vants:rf:s7:1",
+      "ok": true,
+      "detail": "10 s"
+    },
+    {
+      "check": "D5 late (paid after the quote expired): refunded to the sender within 60 s, tagged vants:rf:s4:1",
+      "ok": true,
+      "detail": "10 s"
+    },
+    {
+      "check": "D4 Pier replays are accepted (2xx) and change nothing",
+      "ok": true,
+      "detail": "HTTP 200, 200"
+    },
+    {
+      "check": "D4 forged Pier deliveries get 401 and store nothing",
+      "ok": true,
+      "detail": "HTTP 401, 401"
+    }
+  ]
+}

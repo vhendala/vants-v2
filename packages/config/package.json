@@ -1,0 +1,10 @@
+{
+  "name": "@vants/config",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0",
+    "zod": "4.6.7"
+  }
+}

@@ -1,0 +1,20 @@
+# Local development services. Credentials are local-only defaults (SPEC §7).
+# Host port 5433 so this can run next to Pier's local Postgres on 5432.
+services:
+  postgres:
+    image: postgres:18.6
+    environment:
+      POSTGRES_USER: vants
+      POSTGRES_PASSWORD: vants
+      POSTGRES_DB: vants
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vants -d vants"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+volumes:
+  pgdata:

@@ -1,0 +1,203 @@
+/* Vants components (T-044, DEC-060): the wordmark, buttons, status words and the amount field, in direction A
+   ("Comprovante"): square corners, carimbo blue for the one primary action, ink outlines for the rest. */
+
+.vt-icon {
+  flex: none;
+  display: block;
+}
+
+/* Logo: the V of Vants drawn as the tick of "pago", then the name, condensed and heavy. */
+.vt-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  font: 800 1em / 1 var(--font-display);
+  font-stretch: var(--stretch-display);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  white-space: nowrap;
+}
+.vt-logo-mark {
+  width: 0.92em;
+  height: 0.92em;
+  color: var(--accent);
+}
+.vt-logo--reverse {
+  color: var(--text-on-inverse);
+}
+.vt-logo--reverse .vt-logo-mark {
+  color: var(--accent-on-inverse);
+}
+.vt-logo--mono .vt-logo-mark {
+  color: currentColor;
+}
+
+/* Button */
+.vt-btn {
+  --_h: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--_h);
+  padding: 0 var(--space-5);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  font: 700 16px / 20px var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.vt-btn:active {
+  transform: translateY(1px);
+}
+.vt-btn:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--focus-ring);
+}
+.vt-btn:disabled,
+.vt-btn[aria-disabled="true"] {
+  background: var(--gray-50);
+  border-color: transparent;
+  color: var(--gray-600);
+  cursor: not-allowed;
+  transform: none;
+}
+.vt-btn[aria-busy="true"]:disabled {
+  /* working, not unavailable: the action keeps its colour; the turning mark says it is busy (T-042) */
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: progress;
+}
+.vt-btn--secondary[aria-busy="true"]:disabled {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+.vt-btn--ghost[aria-busy="true"]:disabled {
+  background: transparent;
+  color: var(--accent-text);
+}
+.vt-btn--inverse[aria-busy="true"]:disabled {
+  background: var(--gray-25);
+  color: var(--text);
+}
+.vt-btn--sm {
+  --_h: 36px;
+  padding: 0 var(--space-4);
+  font-size: 14px;
+}
+.vt-btn--lg {
+  --_h: 56px;
+  padding: 0 var(--space-6);
+}
+.vt-btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.vt-btn--primary:hover {
+  background: var(--accent-hover);
+}
+.vt-btn--primary:active {
+  background: var(--accent-pressed);
+}
+.vt-btn--secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+.vt-btn--secondary:hover {
+  background: var(--bg-sunken);
+}
+.vt-btn--ghost {
+  background: transparent;
+  color: var(--accent-text);
+  padding-inline: var(--space-2);
+}
+.vt-btn--ghost:hover {
+  background: var(--bg-sunken);
+}
+.vt-btn--yield {
+  background: var(--yield);
+  color: var(--on-yield);
+}
+.vt-btn--inverse {
+  background: var(--gray-25);
+  color: var(--text);
+}
+.vt-btn--inverse:hover {
+  background: var(--gray-0);
+}
+
+/* Badge: a status is a word with a small mark before it, never a filled pill. */
+.vt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px / 16px var(--font-sans);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.vt-badge--accent {
+  color: var(--accent-text);
+}
+.vt-badge--yield {
+  color: var(--yield-text);
+}
+.vt-badge--danger {
+  color: var(--danger);
+  font-weight: 600;
+}
+.vt-badge--pending {
+  color: var(--text-secondary);
+}
+.vt-badge--code {
+  font-family: var(--font-mono);
+}
+.vt-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+.vt-badge--pending .vt-badge-dot {
+  background: var(--amber-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-btn {
+    transition: none;
+  }
+}
+
+/* Fields */
+.vt-field-label {
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-2);
+}
+.vt-field-help {
+  margin: var(--space-2) 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-muted);
+}
+.vt-field-error {
+  margin: var(--space-2) 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* App additions in the same idiom */
+.vt-btn--block {
+  width: 100%;
+}

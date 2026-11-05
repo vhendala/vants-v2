@@ -1,0 +1,121 @@
+{
+  "recordedAt": "2026-10-22T23:04:03.803Z",
+  "source": "ngrok request capture of the Hodle sandbox dashboard validation pings (T-007)",
+  "pings": [
+    {
+      "url": "/ingress/hodle/PAYOUT_SUCCESSFUL",
+      "receivedAt": "2026-10-22T23:50:51+01:00",
+      "status": 200,
+      "userAgent": "Webhook-Validation/1.0",
+      "headers": [
+        "X-Hodle-Signature",
+        "X-Hodle-Timestamp",
+        "X-Webhook-Event",
+        "X-Webhook-Id"
+      ],
+      "xWebhookEvent": "WEBHOOK_TEST",
+      "xWebhookIdPrefix": "test-validation",
+      "bodyShape": {
+        "event": "WEBHOOK_TEST",
+        "dataFields": [
+          "message",
+          "test"
+        ]
+      },
+      "verifiesWithItsOwnSecret": true,
+      "verifiesWithAnotherEventsSecret": false
+    },
+    {
+      "url": "/ingress/hodle/PAYOUT_FAILED",
+      "receivedAt": "2026-10-22T23:51:38+01:00",
+      "status": 200,
+      "userAgent": "Webhook-Validation/1.0",
+      "headers": [
+        "X-Hodle-Signature",
+        "X-Hodle-Timestamp",
+        "X-Webhook-Event",
+        "X-Webhook-Id"
+      ],
+      "xWebhookEvent": "WEBHOOK_TEST",
+      "xWebhookIdPrefix": "test-validation",
+      "bodyShape": {
+        "event": "WEBHOOK_TEST",
+        "dataFields": [
+          "message",
+          "test"
+        ]
+      },
+      "verifiesWithItsOwnSecret": true,
+      "verifiesWithAnotherEventsSecret": false
+    },
+    {
+      "url": "/ingress/hodle/PAYOUT_REFUNDED",
+      "receivedAt": "2026-10-22T23:51:58+01:00",
+      "status": 200,
+      "userAgent": "Webhook-Validation/1.0",
+      "headers": [
+        "X-Hodle-Signature",
+        "X-Hodle-Timestamp",
+        "X-Webhook-Event",
+        "X-Webhook-Id"
+      ],
+      "xWebhookEvent": "WEBHOOK_TEST",
+      "xWebhookIdPrefix": "test-validation",
+      "bodyShape": {
+        "event": "WEBHOOK_TEST",
+        "dataFields": [
+          "message",
+          "test"
+        ]
+      },
+      "verifiesWithItsOwnSecret": true,
+      "verifiesWithAnotherEventsSecret": false
+    },
+    {
+      "url": "/ingress/hodle/DEPOSIT_ASSET_SUCCESS",
+      "receivedAt": "2026-10-22T23:52:27+01:00",
+      "status": 200,
+      "userAgent": "Webhook-Validation/1.0",
+      "headers": [
+        "X-Hodle-Signature",
+        "X-Hodle-Timestamp",
+        "X-Webhook-Event",
+        "X-Webhook-Id"
+      ],
+      "xWebhookEvent": "WEBHOOK_TEST",
+      "xWebhookIdPrefix": "test-validation",
+      "bodyShape": {
+        "event": "WEBHOOK_TEST",
+        "dataFields": [
+          "message",
+          "test"
+        ]
+      },
+      "verifiesWithItsOwnSecret": true,
+      "verifiesWithAnotherEventsSecret": false
+    },
+    {
+      "url": "/ingress/hodle/DEPOSIT_ASSET_FAILED",
+      "receivedAt": "2026-10-22T23:52:51+01:00",
+      "status": 200,
+      "userAgent": "Webhook-Validation/1.0",
+      "headers": [
+        "X-Hodle-Signature",
+        "X-Hodle-Timestamp",
+        "X-Webhook-Event",
+        "X-Webhook-Id"
+      ],
+      "xWebhookEvent": "WEBHOOK_TEST",
+      "xWebhookIdPrefix": "test-validation",
+      "bodyShape": {
+        "event": "WEBHOOK_TEST",
+        "dataFields": [
+          "message",
+          "test"
+        ]
+      },
+      "verifiesWithItsOwnSecret": true,
+      "verifiesWithAnotherEventsSecret": false
+    }
+  ]
+}

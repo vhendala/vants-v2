@@ -1,0 +1,93 @@
+{
+  "account": "GCBWUAIIB6UXWOGJWQDF5MP3DSVXBTOYD5V3A754Q3ON7CGGRUWXVX5S",
+  "funded": true,
+  "positions": [
+    {
+      "id": "classic:BLND:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "kind": "classic",
+      "asset": "BLND:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "amount": "5000",
+      "valueUsd": null,
+      "pricing": "unpriced",
+      "payable": false,
+      "exit": {
+        "steps": 0,
+        "slippageBps": 0,
+        "estimated": true
+      }
+    },
+    {
+      "id": "classic:USDC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "kind": "classic",
+      "asset": "USDC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "amount": "705",
+      "valueUsd": "705.00",
+      "pricing": "par",
+      "payable": true,
+      "exit": {
+        "steps": 1,
+        "slippageBps": 0,
+        "estimated": false
+      }
+    },
+    {
+      "id": "classic:wBTC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "kind": "classic",
+      "asset": "wBTC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "amount": "0.05",
+      "valueUsd": null,
+      "pricing": "unpriced",
+      "payable": false,
+      "exit": {
+        "steps": 0,
+        "slippageBps": 0,
+        "estimated": true
+      }
+    },
+    {
+      "id": "classic:wETH:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "kind": "classic",
+      "asset": "wETH:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "amount": "0.5",
+      "valueUsd": null,
+      "pricing": "unpriced",
+      "payable": false,
+      "exit": {
+        "steps": 0,
+        "slippageBps": 0,
+        "estimated": true
+      }
+    },
+    {
+      "id": "classic:native",
+      "kind": "classic",
+      "asset": "native",
+      "amount": "9995.5051299",
+      "valueUsd": "8771.08",
+      "pricing": "estimated",
+      "payable": true,
+      "exit": {
+        "steps": 2,
+        "slippageBps": 100,
+        "estimated": true
+      }
+    },
+    {
+      "id": "defindex:CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+      "kind": "defindex",
+      "asset": "USDC:GATALTGTWIOT6BUDBCZM3Q4OQ4BO2COLOAZ7IYSKPLC2PMSOPPGF5V56",
+      "vault": "CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN",
+      "shares": "171.2611105",
+      "amount": "171.2611105",
+      "valueUsd": "171.26",
+      "pricing": "par",
+      "payable": true,
+      "exit": {
+        "steps": 2,
+        "slippageBps": 0,
+        "estimated": false
+      }
+    }
+  ],
+  "totalUsd": "9647.34"
+}

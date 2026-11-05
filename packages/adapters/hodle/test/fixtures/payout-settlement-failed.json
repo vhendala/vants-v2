@@ -1,0 +1,26 @@
+{
+  "source": "spike 2026-10-22T19-56-32-060Z-022-hodle-probe-concurrent-b.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "POST",
+    "url": "/api/wallet/payout",
+    "body": {
+      "value": 100,
+      "asset": "USDH",
+      "network": "base",
+      "qrCode": "00020126490014br.gov.bcb.pix0127pix-spike@vants.example.com52040000530398654041.005802BR5911VANTS TESTE6009SAO PAULO62260522VHODLEMVJYOXL3POHLO3FK63043274",
+      "externalId": "vants-mvjyo8et-cc-b"
+    }
+  },
+  "response": {
+    "status": 422,
+    "headers": {
+      "content-type": "application/json",
+      "x-hodle-sandbox": "simulated"
+    },
+    "body": {
+      "success": false,
+      "error": "Nonce provided for the transaction is lower than the current nonce of the account.\nTry increasing the nonce or find the latest nonce with `getTransactionCount`.\n\nRequest Arguments:\n  from:  0xDF93D84684bb70f70073e3Ab7B85aeAC81bCC7C8\n  to:    0x1c7af3c850c1d1d8d97d40db0acdd0195c6323f7\n  data:  0xa9059cbb000000000000000000000000356f41944a832e8705057151dc50fe838f671474000000000000000000000000000000000000000000000000000000000002d361\n \nContract Call:\n  address:   0x1c7af3c850c1d1d8d97d40db0acdd0195c6323f7\n  function:  transfer(address to, uint256 amount)\n  args:              (0x356F41944A832e8705057151Dc50FE838f671474, 185185)\n  sender:    0xDF93D84684bb70f70073e3Ab7B85aeAC81bCC7C8\n\nDocs: https://viem.sh/docs/contract/writeContract\nDetails: already known\nVersion: viem@2.38.5",
+      "errorCode": "SANDBOX_SETTLEMENT_FAILED"
+    }
+  }
+}

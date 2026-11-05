@@ -1,0 +1,26 @@
+{
+  "source": "spike 2026-10-22T19-56-28-444Z-020-hodle-probe-insufficient.json (Hodle sandbox, 2026-10-22)",
+  "request": {
+    "method": "POST",
+    "url": "/api/wallet/payout",
+    "body": {
+      "value": 47200,
+      "asset": "USDH",
+      "network": "base",
+      "qrCode": "00020126490014br.gov.bcb.pix0127pix-spike@vants.example.com5204000053039865406472.005802BR5911VANTS TESTE6009SAO PAULO62260522VHODLEMVJYOV9819U1KRG36304D316",
+      "externalId": "vants-mvjyo8et-ins"
+    }
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-hodle-sandbox": "simulated"
+    },
+    "body": {
+      "success": false,
+      "error": "Saldo insuficiente de USDH na carteira de teste",
+      "errorCode": "SANDBOX_INSUFFICIENT_BALANCE"
+    }
+  }
+}

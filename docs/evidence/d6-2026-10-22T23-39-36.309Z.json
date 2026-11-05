@@ -1,0 +1,108 @@
+{
+  "startedAt": "2026-10-22T23:39:36.309Z",
+  "floatBefore6": "21629634",
+  "paymentA": {
+    "paymentId": "pay_05e898d21fbd4d59970bb014",
+    "depositTx": "47adfcbecdf7ba2ceb158facb9d251b47e84b1f6be233e4a08eb59e854d5612e",
+    "completedAt": "2026-10-22T23:39:51.526Z"
+  },
+  "paymentB": {
+    "paymentId": "pay_4426d83348364bb5b7bfe194",
+    "depositTx": "7d3b85264cacb12e3f7d63ed61a9c3b182f79486835a3a24ed8fb39f98ced40b",
+    "completedAt": "2026-10-22T23:40:10.447Z",
+    "refillStatusWhenCompleted": "attesting"
+  },
+  "refill": {
+    "id": "rfl_87058ffa69f346e49a50",
+    "status": "completed",
+    "amount6": "1000000",
+    "approve_hash": "b0de79c9270c5408185178011516b7969ee25f535a5d68a110fce3e177eb5fef",
+    "burn_hash": "04b8660c7c514f3ef006be5624627c9264adae17aea1ce4c90c188f48d5f5bf2",
+    "mint_hash": "0xc799f50f2a9d13572361dbbf247c5067730aa421e4403ed9218e254a6d44a0dc",
+    "fee_executed6": "0",
+    "minted6": "1000000",
+    "credit_cents": 540,
+    "credit6": "1000000",
+    "track_id": "9f1eb35c-97c2-4d18-a6d2-a75d943717ed",
+    "attempts": 0,
+    "last_error": null,
+    "created_at": "2026-10-22T23:39:56.733Z",
+    "finished_at": "2026-10-22T23:40:20.742Z",
+    "timeline": [
+      {
+        "status": "approving",
+        "at": "2026-10-22T23:39:57.557Z"
+      },
+      {
+        "status": "burning",
+        "at": "2026-10-22T23:40:02.593Z"
+      },
+      {
+        "status": "attesting",
+        "at": "2026-10-22T23:40:08.125Z"
+      },
+      {
+        "status": "minting",
+        "at": "2026-10-22T23:40:14.163Z"
+      },
+      {
+        "status": "crediting",
+        "at": "2026-10-22T23:40:15.673Z"
+      },
+      {
+        "status": "completed",
+        "at": "2026-10-22T23:40:21.208Z"
+      }
+    ]
+  },
+  "events": [
+    {
+      "type": "FloatLow",
+      "at": "2026-10-22T23:39:52.548Z",
+      "payload": {
+        "min6": "21500000",
+        "topUp6": "1370366",
+        "target6": "22500000",
+        "balance6": "21129634",
+        "reserved6": "0"
+      }
+    },
+    {
+      "type": "CctpBurned",
+      "at": "2026-10-22T23:40:07.635Z",
+      "payload": {
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "burned7": "10000000",
+        "burnHash": "04b8660c7c514f3ef006be5624627c9264adae17aea1ce4c90c188f48d5f5bf2",
+        "refillId": "rfl_87058ffa69f346e49a50"
+      }
+    },
+    {
+      "type": "CctpMinted",
+      "at": "2026-10-22T23:40:15.227Z",
+      "payload": {
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "burned7": "10000000",
+        "minted6": "1000000",
+        "mintHash": "0xc799f50f2a9d13572361dbbf247c5067730aa421e4403ed9218e254a6d44a0dc",
+        "refillId": "rfl_87058ffa69f346e49a50"
+      }
+    },
+    {
+      "type": "FloatCredited",
+      "at": "2026-10-22T23:40:20.744Z",
+      "payload": {
+        "cents": 540,
+        "credit6": "1000000",
+        "trackId": "9f1eb35c-97c2-4d18-a6d2-a75d943717ed",
+        "refillId": "rfl_87058ffa69f346e49a50"
+      }
+    }
+  ],
+  "floatAfter6": "21629634",
+  "checks": {
+    "refillCompleted": true,
+    "paymentBNotBlocked": true,
+    "creditExact": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "check": "D2 (vault route, human's wallet)",
+  "recordedBy": "agent, from the database, after the human's run in the real UI",
+  "network": "Stellar testnet + Hodle sandbox (simulated Pix)",
+  "account": "GCYGHQHGHVQALH4TFUA4EZKQXZQAJ2PFSOXOVVH7UTT6ZNM4BQMVPLOP",
+  "brCodeValueBrl": "20.00",
+  "exit": {
+    "id": "ext_71b9c10aa8164b629527",
+    "route": "router",
+    "picks": ["defindex:CBMVK2JK6NTOT2O4HNQAIQFJY232BHKGLIMXDVQVHIIZKDACXDFZDWHN", "classic:USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5"],
+    "note": "the vault covered the whole amount, so the second pick was left alone (planner: later picks unused once covered)",
+    "summary": ["Sacar 3,7037038 USDC do seu cofre DeFindex (3,7037038 cotas)", "Pagar 3,7037038 USDC à Vants"],
+    "signatures": 1,
+    "stellarTx": "3d69acf319a809385fa3d1041f2fe9af1e65fc6902f6b969e1e7fd7d03f0ce1d"
+  },
+  "payout": { "status": "completed", "endToEndId": "SANDBOXB0612B240DE644BDB0264F02F" },
+  "timeline": { "planned": "2026-10-23T00:53:57.627Z", "submitted": "2026-10-23T00:54:05.374Z", "paid": "2026-10-23T00:54:13.866Z", "signedToPaidSeconds": 8.5 },
+  "setup": "Funded by the agent at the human's request: 50 Circle USDC (SDEX swap from the test payer, tx a54fd2cb…), 100 vault shares (deposit 29f9b403…, transfer 78d553f7…), 20 Blend USDC after the human added the trustline (tx d610f4ad…)."
+}

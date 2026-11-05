@@ -1,0 +1,19 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+.tmp/
+
+# Soroban contracts: build output and the SDK's generated test snapshots
+contracts/*/target/
+contracts/*/test_snapshots/
+
+# Vercel deploys (deploy/web.sh)
+.vercel-deploy/
+.vercel-link/
+.vercel/
+.taste-skill/

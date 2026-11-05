@@ -1,0 +1,51 @@
+{
+  "name": "vants-v2",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": "24.18.1",
+    "pnpm": "11.21.0"
+  },
+  "scripts": {
+    "format:check": "biome format .",
+    "format": "biome format --write .",
+    "lint": "biome lint --error-on-warnings .",
+    "test": "vitest run --exclude \"**/*.int.test.ts\" --exclude \"**/node_modules/**\"",
+    "test:integration": "vitest run .int.test.ts",
+    "build": "tsc -p tsconfig.json && tsc -p apps/web/tsconfig.json && pnpm --filter @vants/web build",
+    "check:config": "secretlint \"**/*\"",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "pier:setup": "node --env-file=.env apps/worker/src/setup-pier.ts",
+    "pier:pull": "node --env-file=.env apps/worker/src/pull-pier.ts",
+    "api": "node --env-file=.env apps/api/src/main.ts",
+    "integrator:create": "node --env-file=.env apps/api/src/create-integrator.ts",
+    "worker": "node --env-file=.env apps/worker/src/main.ts",
+    "e2e": "node --env-file=.env apps/worker/test/e2e-testnet.ts",
+    "probe:webhooks": "node --env-file=.env apps/worker/test/probe-webhooks.ts",
+    "reconcile": "node --env-file=.env apps/worker/src/reconcile-once.ts",
+    "float:topup": "node --env-file=.env apps/worker/src/topup-float.ts",
+    "d6": "node --env-file=.env apps/worker/test/d6-refill.ts",
+    "portfolio": "node --env-file=.env apps/api/src/portfolio-cli.ts",
+    "exit:smoke": "node --env-file=.env apps/api/test/exit-smoke.ts",
+    "test:contracts": "cargo test --manifest-path contracts/exit-router/Cargo.toml && cargo clippy --manifest-path contracts/exit-router/Cargo.toml --all-targets -- -D warnings",
+    "app:smoke": "node --env-file=.env apps/api/test/app-smoke.ts",
+    "money:smoke": "node --env-file=.env apps/api/test/money-smoke.ts",
+    "lumens:smoke": "node --env-file=.env apps/api/test/lumens-pay-smoke.ts",
+    "tesouro:smoke": "node --env-file=.env apps/api/test/tesouro-smoke.ts",
+    "check:contrast": "node apps/web/test/contrast.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.2",
+    "@secretlint/secretlint-rule-pattern": "13.0.7",
+    "@secretlint/secretlint-rule-preset-recommend": "13.0.7",
+    "@testcontainers/postgresql": "12.2.1",
+    "@types/node": "24.19.2",
+    "fast-check": "4.10.2",
+    "secretlint": "13.0.7",
+    "testcontainers": "12.2.1",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  }
+}
